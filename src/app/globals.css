@@ -2,6 +2,21 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+:root {
+  --bg: white;
+  --text: slate-950;
+}
+
+.dark {
+  --bg: black;
+  --text: white;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
