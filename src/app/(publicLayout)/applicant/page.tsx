@@ -51,7 +51,7 @@ export default function ApplicantPage() {
         </div>
 
         {/* Filters bar */}
-        <div className="bg-card border border-border rounded-2xl p-4 mb-8 shadow-sm">
+        <div className="bg-card border border-gray-100rounded-md p-4 mb-8 shadow-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
             {/* Gender Filter */}
             <div className="space-y-2">
@@ -111,7 +111,7 @@ export default function ApplicantPage() {
 
         {/* Grid */}
         {filteredPersons.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredPersons.map(p => (
               <Card key={p._id} p={p} />
             ))}
@@ -134,4 +134,4 @@ export default function ApplicantPage() {
       </div>
     </div>
   )
-}
+}
