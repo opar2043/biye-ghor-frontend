@@ -167,7 +167,7 @@ export default function Card({ p }: { p: Person }) {
   const isFemale = p.gender === 'Female'
  
   return (
-    <div className="bg-white rounded-2xl border border-black/10 overflow-hidden hover:border-black/20 hover:shadow-md transition-all duration-200">
+    <div className="bg-card rounded-2xl border border-border overflow-hidden hover:border-primary/30 hover:shadow-md transition-all duration-200">
  
       {/* Top */}
       <div className="flex items-start gap-3 p-5 pb-3 relative">
@@ -181,8 +181,8 @@ export default function Card({ p }: { p: Person }) {
           {getInitials(p.name)}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-medium text-[15px] text-gray-900 truncate">{p.name}</p>
-          <p className="text-xs text-gray-400">ID #{p._id}</p>
+          <p className="font-medium text-[15px] text-foreground truncate">{p.name}</p>
+          <p className="text-xs text-muted-foreground">ID #{p._id}</p>
         </div>
         <div
           title={p.isSeen ? 'Seen' : 'Not seen'}
@@ -206,19 +206,19 @@ export default function Card({ p }: { p: Person }) {
  
       {/* Info rows */}
       <div className="px-5 pb-3 space-y-1.5">
-        <div className="flex items-center gap-2 text-xs text-gray-400">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <PhoneIcon /> <span className="truncate">{p.number}</span>
         </div>
-        <div className="flex items-center gap-2 text-xs text-gray-400">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <PinIcon /> <span className="truncate">{p.adress}</span>
         </div>
-        <div className="flex items-center gap-2 text-xs text-gray-400">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <CalendarIcon /> <span className="truncate">{p.appoionmentAdress}</span>
         </div>
       </div>
  
       {/* Divider */}
-      <div className="mx-5 border-t border-black/[0.06]" />
+      <div className="mx-5 border-t border-border" />
  
       {/* Actions */}
       <div className="flex gap-2 p-5 pt-3">
@@ -226,7 +226,7 @@ export default function Card({ p }: { p: Person }) {
           href={`/applicant/${p._id}`}
           className="flex-1 text-center py-1.5 text-xs rounded-lg border transition-colors duration-150"
           style={{ borderColor: '#534AB7', color: '#534AB7' }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = '#EEEDFE')}
+          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgb(83 74 183 / 0.1)')}
           onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
         >
           View profile
@@ -235,7 +235,7 @@ export default function Card({ p }: { p: Person }) {
           href={`tel:${p.number}`}
           className="flex-1 text-center py-1.5 text-xs rounded-lg border transition-colors duration-150"
           style={{ borderColor: '#0F6E56', color: '#0F6E56' }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = '#E1F5EE')}
+          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgb(15 110 86 / 0.1)')}
           onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
         >
           Contact

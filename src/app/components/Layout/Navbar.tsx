@@ -135,13 +135,14 @@ function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
           ) : (
             /* Login */
             <div className="p-1.5">
-              <button
-                onClick={() => { onLogin?.(); setOpen(false) }}
+              <Link
+                href="/login"
+               
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <LogIn className="w-4 h-4 text-zinc-400" />
                 Log in
-              </button>
+              </Link>
             </div>
           )}
         </div>

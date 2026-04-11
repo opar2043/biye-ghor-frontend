@@ -31,51 +31,6 @@ export function Hero() {
           Your story of togetherness starts here.
         </p>
 
-        {/* Search Bar / Form */}
-        <div className="w-full max-w-4xl mx-auto mb-16 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300">
-          <div className="p-2 rounded-3xl bg-white dark:bg-zinc-900 shadow-2xl shadow-zinc-200 dark:shadow-black border border-zinc-100 dark:border-zinc-800">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
-              <div className="flex flex-col items-start px-4 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-2xl transition-colors cursor-pointer group">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1 group-hover:text-indigo-500 transition-colors">I'm looking for</span>
-                <select className="bg-transparent text-sm font-semibold text-zinc-700 dark:text-zinc-200 outline-none w-full appearance-none">
-                  <option>Groom</option>
-                  <option>Bride</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col items-start px-4 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-2xl transition-colors cursor-pointer group border-l border-zinc-100 dark:border-zinc-800 hidden md:flex">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1 group-hover:text-indigo-500 transition-colors">Religion</span>
-                <select className="bg-transparent text-sm font-semibold text-zinc-700 dark:text-zinc-200 outline-none w-full appearance-none">
-                  <option>Muslim</option>
-                  <option>Hindu</option>
-                  <option>Christian</option>
-                  <option>Buddhist</option>
-                  <option>Sikh</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col items-start px-4 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-2xl transition-colors cursor-pointer group border-l border-zinc-100 dark:border-zinc-800 hidden md:flex">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1 group-hover:text-indigo-500 transition-colors">Location</span>
-                <div className="flex items-center gap-2 w-full">
-                  <MapPin className="w-3.5 h-3.5 text-zinc-400" />
-                  <input
-                    type="text"
-                    placeholder="City or Country"
-                    className="bg-transparent text-sm font-semibold text-zinc-700 dark:text-zinc-200 outline-none w-full placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
-                  />
-                </div>
-              </div>
-
-              <div className="p-1">
-                <button className="h-full w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
-                  <Search className="w-4 h-4" />
-                  Search Partners
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Trust Badges */}
         <div className="flex flex-wrap justify-center gap-8 md:gap-12 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
           <div className="flex items-center gap-2 text-zinc-400 dark:text-zinc-500">
