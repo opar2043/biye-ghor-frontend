@@ -31,21 +31,14 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className="min-h-screen antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem={false} // 🔥 IMPORTANT: avoids hydration mismatch
           disableTransitionOnChange
         >
-          {/* Navbar */}
-          <Navbar user={null} />
-
-          {/* Main Content */}
-          <main className="flex-1">{children}</main>
-
-          {/* Footer */}
-          <Footer />
+          {children}
         </ThemeProvider>
       </body>
     </html>

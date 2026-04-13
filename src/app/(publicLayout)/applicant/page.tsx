@@ -1,8 +1,10 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { Users, MapPin, RotateCcw, Map } from "lucide-react"
 import Card from "../../components/Layout/Card"
 import { BANGLADESH_LOCATIONS, DIVISIONS, Division } from "../../constants/locationData"
+import { FaFemale, FaMale } from "react-icons/fa"
 
 const initialPersons = [
   { _id: "1", name: "Ayesha Rahman", number: "01712345678", adress: "Dhaka, Bangladesh", age: 24, gender: "Female", color: "Fair", hairColor: "Black", eyeColor: "Brown", education: "BSc in CSE", appoionmentAdress: "Dhanmondi, Dhaka", isSeen: false, division: "Dhaka", district: "Dhaka" },
@@ -51,59 +53,95 @@ export default function ApplicantPage() {
         </div>
 
         {/* Filters bar */}
-        <div className="bg-card border border-gray-100rounded-md p-4 mb-8 shadow-xs">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+        <div className="bg-card border border-border rounded-md p-6 mb-8 shadow-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
             {/* Gender Filter */}
-            <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-1">Gender</label>
-              <select 
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all cursor-pointer"
-              >
-                <option value="">All Genders</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
+            <div className="space-y-2.5">
+              <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.05em] text-muted-foreground px-1">
+                Gender
+              </label>
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none group-focus-within:scale-110 transition-transform">
+                  <Users size={18} />
+                </div>
+                <select 
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="w-full bg-background border border-border rounded-md pl-12 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none transition-all cursor-pointer hover:border-muted-foreground/30 appearance-none"
+                >
+                  <option value=""> All Genders</option>
+                  <option value="Male"><FaMale size={18} />Male</option>
+                  <option value="Female"><FaFemale size={18} /> Female</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {/* Division Filter */}
-            <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-1">Division</label>
-              <select 
-                value={division}
-                onChange={handleDivisionChange}
-                className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all cursor-pointer"
-              >
-                <option value="">All Divisions</option>
-                {DIVISIONS.map(div => (
-                  <option key={div} value={div}>{div}</option>
-                ))}
-              </select>
+            <div className="space-y-2.5">
+              <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.05em] text-muted-foreground px-1">
+                Division
+              </label>
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none group-focus-within:scale-110 transition-transform">
+                  <Map size={18} />
+                </div>
+                <select 
+                  value={division}
+                  onChange={handleDivisionChange}
+                  className="w-full bg-background border border-border rounded-md pl-12 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none transition-all cursor-pointer hover:border-muted-foreground/30 appearance-none"
+                >
+                  <option value="">All Divisions</option>
+                  {DIVISIONS.map(div => (
+                    <option key={div} value={div}>{div}</option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {/* District Filter */}
-            <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-1">District</label>
-              <select 
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-                disabled={!division}
-                className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <option value="">All Districts</option>
-                {division && BANGLADESH_LOCATIONS[division].map(dist => (
-                  <option key={dist} value={dist}>{dist}</option>
-                ))}
-              </select>
+            <div className="space-y-2.5">
+              <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.05em] text-muted-foreground px-1">
+                District
+              </label>
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none group-focus-within:scale-110 transition-transform">
+                  <MapPin size={18} />
+                </div>
+                <select 
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  disabled={!division}
+                  className="w-full bg-background border border-border rounded-md pl-12 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:border-muted-foreground/30 appearance-none"
+                >
+                  <option value="">All Districts</option>
+                  {division && BANGLADESH_LOCATIONS[division].map(dist => (
+                    <option key={dist} value={dist}>{dist}</option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {/* Reset Button */}
             <button 
               onClick={resetFilters}
-              className="px-6 py-2.5 bg-secondary text-secondary-foreground font-medium rounded-xl text-sm border border-secondary hover:bg-secondary/80 transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="px-6 py-2.5 bg-secondary text-secondary-foreground font-semibold rounded-md text-sm border border-border hover:bg-muted transition-all cursor-pointer flex items-center justify-center gap-2 h-[42px] w-full lg:w-auto"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <RotateCcw size={16} />
               Reset
             </button>
           </div>

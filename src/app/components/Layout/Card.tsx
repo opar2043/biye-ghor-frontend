@@ -162,6 +162,22 @@ function CalendarIcon() {
     </svg>
   )
 }
+
+function MaleIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+      <path d="M16 3h5v5"/><path d="m21 3-6.7 6.7"/><circle cx="10" cy="14" r="6"/>
+    </svg>
+  )
+}
+
+function FemaleIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+      <circle cx="12" cy="9" r="6"/><path d="M12 15v7"/><path d="M9 19h6"/>
+    </svg>
+  )
+}
  
 export default function Card({ p }: { p: Person }) {
   const isFemale = p.gender === 'Female'
@@ -193,7 +209,8 @@ export default function Card({ p }: { p: Person }) {
  
       {/* Tags */}
       <div className="flex flex-wrap gap-1.5 px-5 pb-3">
-        <span className="text-[11px] px-2.5 py-0.5 rounded-full" style={{ background: '#FBEAF0', color: '#72243E' }}>
+        <span className="text-[11px] px-2.5 py-0.5 rounded-full flex items-center gap-1" style={{ background: '#FBEAF0', color: '#72243E' }}>
+          {isFemale ? <FemaleIcon /> : <MaleIcon />}
           {p.gender}
         </span>
         <span className="text-[11px] px-2.5 py-0.5 rounded-full" style={{ background: '#FAEEDA', color: '#633806' }}>

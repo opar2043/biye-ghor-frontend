@@ -20,6 +20,7 @@ const navLinks = [
   { label: "About",     href: "/about" },
   { label: "Contact",   href: "/contact" },
   { label: "Applicant", href: "/applicant" },
+  { label: "Complain", href: "/complain" },
 ]
 
 // ─── Types ────────────────────────────────────────────────────
@@ -138,10 +139,18 @@ function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
               <Link
                 href="/login"
                
-                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <LogIn className="w-4 h-4 text-zinc-400" />
                 Log in
+              </Link>
+              <Link
+                href="/dashboard"
+               
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              >
+                <LayoutDashboard className="w-4 h-4 text-zinc-400" />
+                Dashboard
               </Link>
             </div>
           )}
