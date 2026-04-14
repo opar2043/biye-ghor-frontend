@@ -36,10 +36,10 @@ const CustomerNavigation = () => (
 
 const ProviderNavigation = () => (
   <>
-    <Navigator route="/" Icon={HomeIcon} label="Home" />
     <Navigator route="/dashboard/provider/add-items" Icon={MedicineIcon} label="Add Items" />
     <Navigator route="/dashboard/provider/all-orders" Icon={AllOrdersIcon} label="All Orders" />
     <Navigator route="/dashboard/provider/manage-items" Icon={StockIcon} label="Manage Items" />
+    <Navigator route="/" Icon={HomeIcon} label="Home" />
   </>
 );
 

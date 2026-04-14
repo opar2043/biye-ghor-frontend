@@ -35,7 +35,7 @@ export default function AddApplicantForm() {
     adress: ""
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target
     setFormData(prev => {
       const newData = { ...prev, [name]: value }
@@ -44,7 +44,7 @@ export default function AddApplicantForm() {
     })
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     setIsSubmitting(true)
     await new Promise(resolve => setTimeout(resolve, 1500))
@@ -206,9 +206,7 @@ function FormField({ label, name, icon, children }: { label: string, name: strin
         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-indigo-600 transition-colors pointer-events-none">
           {icon}
         </div>
-        {React.cloneElement(children, {
-          className: `w-full bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-md pl-12 pr-4 py-3 text-sm outline-none focus:ring-4 focus:ring-indigo-600/10 focus:border-indigo-600/50 transition-all ${children.props.className || ""}`
-        })}
+
       </div>
     </div>
   )
