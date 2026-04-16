@@ -13,48 +13,88 @@ import {
   Plus,
   ArrowRight,
   CheckCircle2,
-  Map
+  Map,
+  Users
 } from "lucide-react"
-import { DIVISIONS, BANGLADESH_LOCATIONS, Division } from "../../constants/locationData"
+import { DIVISIONS, BANGLADESH_LOCATIONS } from "../../constants/locationData"
+import { personRoutes } from "@/src/Service/person.route"
+import personType from "@/src/Service/type"
+import { toast } from "sonner"
 
 export default function AddApplicantForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<personType>({
+    _id: "",
     name: "",
     number: "",
-    age: "",
+    age: 0,
     gender: "",
     education: "",
-    division: "" as Division | "",
+    division: "",
     district: "",
     color: "",
     hairColor: "",
     eyeColor: "",
     appoionmentAdress: "",
-    adress: ""
+    adress: "",
+    isSeen: false,
+    isApprove: false,
   })
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target
     setFormData(prev => {
-      const newData = { ...prev, [name]: value }
+      const newData = { 
+        ...prev, 
+        [name]: type === "number" ? (value === "" ? 0 : Number(value)) : value 
+      }
       if (name === "division") newData.district = "" // Reset district when division changes
       return newData
     })
   }
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+    const toastId = toast.loading("Adding applicant...")
+    try {
+      // Remove _id for new entries
+      const { _id, ...submitData } = formData
+      const data = await personRoutes.addPerson(submitData as personType)
+      if (data) {
+        toast.success("Applicant added successfully", { id: toastId })
+        setIsSubmitted(true)
+        // Reset form
+        setFormData({
+          _id: "",
+          name: "",
+          number: "",
+          age: 0,
+          gender: "",
+          education: "",
+          division: "",
+          district: "",
+          color: "",
+          hairColor: "",
+          eyeColor: "",
+          appoionmentAdress: "",
+          adress: "",
+          isSeen: false,
+          isApprove: false,
+        })
+      }
+    } catch (error) {
+      console.error("Submission error:", error)
+      toast.error("Something went wrong", { id: toastId })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {
     return (
-      <div className="bg-white dark:bg-zinc-900 rounded-md p-10 border border-emerald-100 dark:border-emerald-900/30 text-center animate-in zoom-in duration-500">
+      <div className="bg-white dark:bg-zinc-950 rounded-xl p-8 md:p-12 border border-zinc-200 dark:border-zinc-800 text-center animate-in zoom-in duration-500 shadow-2xl">
         <div className="w-20 h-20 bg-emerald-50 dark:bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle2 className="w-10 h-10 text-emerald-500" />
         </div>
@@ -64,7 +104,7 @@ export default function AddApplicantForm() {
         </p>
         <button 
           onClick={() => setIsSubmitted(false)}
-          className="px-8 py-3 bg-indigo-600 text-white rounded-md font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 mx-auto"
+          className="px-8 py-3 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 rounded-lg font-bold hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all flex items-center gap-2 mx-auto"
         >
           <Plus size={18} />
           Add Another Applicant
@@ -74,42 +114,83 @@ export default function AddApplicantForm() {
   }
 
   return (
-    <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-md shadow-xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="p-8 md:p-10">
-        <form onSubmit={handleSubmit} className="space-y-10">
+    <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="p-6 md:p-10">
+        <form onSubmit={handleSubmit} className="space-y-8 md:space-y-12">
           
           {/* Section: Basic Information */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-              <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/30 rounded-md flex items-center justify-center text-indigo-600">
-                <User size={18} />
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+                <User size={20} />
               </div>
-              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Basic Information</h3>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Basic Information</h3>
+                <p className="text-sm text-zinc-500">Provide the essential details of the applicant</p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <FormField label="Full Name" name="name" icon={<User size={16} />}>
-                <input required type="text" name="name" value={formData.name} onChange={handleChange} placeholder="e.g. Ayesha Rahman" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
+              <FormField label="Full Name" icon={<User size={18} />}>
+                <input 
+                  required 
+                  type="text" 
+                  name="name" 
+                  value={formData.name} 
+                  onChange={handleChange} 
+                  placeholder="e.g. Ayesha Rahman" 
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                />
               </FormField>
 
-              <FormField label="Phone Number" name="number" icon={<Phone size={16} />}>
-                <input required type="text" name="number" value={formData.number} onChange={handleChange} placeholder="e.g. 017XXXXXXXX" />
+              <FormField label="Phone Number" icon={<Phone size={18} />}>
+                <input 
+                  required 
+                  type="text" 
+                  name="number" 
+                  value={formData.number} 
+                  onChange={handleChange} 
+                  placeholder="e.g. 017XXXXXXXX" 
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                />
               </FormField>
 
-              <FormField label="Age" name="age" icon={<Calendar size={16} />}>
-                <input required type="number" name="age" value={formData.age} onChange={handleChange} placeholder="e.g. 24" />
+              <FormField label="Age" icon={<Calendar size={18} />}>
+                <input 
+                  required 
+                  type="number" 
+                  name="age" 
+                  value={formData.age || ""} 
+                  onChange={handleChange} 
+                  placeholder="e.g. 24" 
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                />
               </FormField>
 
-              <FormField label="Gender" name="gender" icon={<Users size={16} />}>
-                <select required name="gender" value={formData.gender} onChange={handleChange}>
+              <FormField label="Gender" icon={<Users size={18} />}>
+                <select 
+                  required 
+                  name="gender" 
+                  value={formData.gender} 
+                  onChange={handleChange}
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer"
+                >
                   <option value="">Select Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
               </FormField>
 
-              <FormField label="Education" name="education" icon={<GraduationCap size={16} />}>
-                <input required type="text" name="education" value={formData.education} onChange={handleChange} placeholder="e.g. BSc in CSE" />
+              <FormField label="Education" icon={<GraduationCap size={18} />}>
+                <input 
+                  required 
+                  type="text" 
+                  name="education" 
+                  value={formData.education} 
+                  onChange={handleChange} 
+                  placeholder="e.g. BSc in CSE" 
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                />
               </FormField>
             </div>
           </div>
@@ -117,23 +198,50 @@ export default function AddApplicantForm() {
           {/* Section: Physical Appearance */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-              <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/30 rounded-md flex items-center justify-center text-indigo-600">
-                <Camera size={18} />
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+                <Camera size={20} />
               </div>
-              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Appearance Details</h3>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Appearance Details</h3>
+                <p className="text-sm text-zinc-500">How the applicant looks</p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <FormField label="Skin Color" name="color" icon={<CloudHail size={16} />}>
-                <input required type="text" name="color" value={formData.color} onChange={handleChange} placeholder="e.g. Fair" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
+              <FormField label="Skin Color" icon={<CloudHail size={18} />}>
+                <input 
+                  required 
+                  type="text" 
+                  name="color" 
+                  value={formData.color} 
+                  onChange={handleChange} 
+                  placeholder="e.g. Fair" 
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                />
               </FormField>
 
-              <FormField label="Hair Color" name="hairColor" icon={<CloudHail size={16} />}>
-                <input required type="text" name="hairColor" value={formData.hairColor} onChange={handleChange} placeholder="e.g. Black" />
+              <FormField label="Hair Color" icon={<CloudHail size={18} />}>
+                <input 
+                  required 
+                  type="text" 
+                  name="hairColor" 
+                  value={formData.hairColor} 
+                  onChange={handleChange} 
+                  placeholder="e.g. Black" 
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                />
               </FormField>
 
-              <FormField label="Eye Color" name="eyeColor" icon={<Eye size={16} />}>
-                <input required type="text" name="eyeColor" value={formData.eyeColor} onChange={handleChange} placeholder="e.g. Brown" />
+              <FormField label="Eye Color" icon={<Eye size={18} />}>
+                <input 
+                  required 
+                  type="text" 
+                  name="eyeColor" 
+                  value={formData.eyeColor} 
+                  onChange={handleChange} 
+                  placeholder="e.g. Brown" 
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                />
               </FormField>
             </div>
           </div>
@@ -141,48 +249,80 @@ export default function AddApplicantForm() {
           {/* Section: Location Details */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-              <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-md flex items-center justify-center text-emerald-600">
-                <Map size={18} />
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+                <Map size={20} />
               </div>
-              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Location & Appointment</h3>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Location & Appointment</h3>
+                <p className="text-sm text-zinc-500">Address and meeting preferences</p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <FormField label="Division" name="division" icon={<Map size={16} />}>
-                <select required name="division" value={formData.division} onChange={handleChange}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-7">
+              <FormField label="Division" icon={<Map size={18} />}>
+                <select 
+                  required 
+                  name="division" 
+                  value={formData.division} 
+                  onChange={handleChange}
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer"
+                >
                   <option value="">Select Division</option>
-                  {DIVISIONS.map(div => <option key={div} value={div}>{div}</option>)}
+                  {(Object.keys(BANGLADESH_LOCATIONS)).map(div => <option key={div} value={div}>{div}</option>)}
                 </select>
               </FormField>
 
-              <FormField label="District" name="district" icon={<MapPin size={16} />}>
-                <select required name="district" value={formData.district} onChange={handleChange} disabled={!formData.division}>
+              <FormField label="District" icon={<MapPin size={18} />}>
+                <select 
+                  required 
+                  name="district" 
+                  value={formData.district} 
+                  onChange={handleChange} 
+                  disabled={!formData.division}
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer disabled:opacity-50"
+                >
                   <option value="">Select District</option>
-                  {formData.division && BANGLADESH_LOCATIONS[formData.division].map(dist => (
+                  {formData.division && BANGLADESH_LOCATIONS[formData.division as keyof typeof BANGLADESH_LOCATIONS]?.map(dist => (
                     <option key={dist} value={dist}>{dist}</option>
                   ))}
                 </select>
               </FormField>
 
-              <div className="lg:col-span-2">
-                <FormField label="Appointment Address" name="appoionmentAdress" icon={<MapPin size={16} />}>
-                  <input required type="text" name="appoionmentAdress" value={formData.appoionmentAdress} onChange={handleChange} placeholder="Specific area or office address" />
+              <div className="sm:col-span-2">
+                <FormField label="Appointment Address" icon={<MapPin size={18} />}>
+                  <input 
+                    required 
+                    type="text" 
+                    name="appoionmentAdress" 
+                    value={formData.appoionmentAdress} 
+                    onChange={handleChange} 
+                    placeholder="Specific area or office address" 
+                    className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                  />
                 </FormField>
               </div>
             </div>
             
-            <FormField label="Full Address" name="adress" icon={<MapPin size={16} />}>
-              <textarea required name="adress" value={formData.adress} onChange={handleChange} placeholder="Full residential address..." rows={2} className="resize-none" />
+            <FormField label="Full Address" icon={<MapPin size={18} />}>
+              <textarea 
+                required 
+                name="adress" 
+                value={formData.adress} 
+                onChange={handleChange} 
+                placeholder="Full residential address..." 
+                rows={3} 
+                className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all resize-none" 
+              />
             </FormField>
           </div>
 
           <button
             disabled={isSubmitting}
             type="submit"
-            className="w-full h-14 bg-indigo-600 text-white rounded-md font-bold shadow-lg shadow-indigo-500/20 hover:bg-indigo-700 active:scale-[0.99] transition-all flex items-center justify-center gap-3 disabled:opacity-70 mt-4"
+            className="w-full h-14 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 rounded-xl font-bold shadow-xl shadow-zinc-900/10 hover:bg-zinc-800 dark:hover:bg-zinc-200 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
           >
             {isSubmitting ? (
-              <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin" />
+              <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
                 <span>Publish Applicant Profile</span>
@@ -196,26 +336,19 @@ export default function AddApplicantForm() {
   )
 }
 
-function FormField({ label, name, icon, children }: { label: string, name: string, icon: React.ReactNode, children: React.ReactElement }) {
+function FormField({ label, icon, children }: { label: string, icon: React.ReactNode, children: React.ReactNode }) {
   return (
     <div className="space-y-2">
-      <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 ml-1">
+      <label className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 ml-1">
         {label}
       </label>
       <div className="relative group">
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-indigo-600 transition-colors pointer-events-none">
+        <div className="absolute left-4 top-[14px] text-zinc-400 group-focus-within:text-zinc-900 dark:group-focus-within:text-zinc-100 transition-colors pointer-events-none">
           {icon}
         </div>
-
+        {children}
       </div>
     </div>
   )
 }
 
-function Users({ size, className }: { size: number, className?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  )
-}

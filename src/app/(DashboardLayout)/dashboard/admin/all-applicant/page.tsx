@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { 
   Users, 
   Search, 
@@ -11,18 +11,77 @@ import {
   ChevronLeft, 
   ChevronRight,
   Eye,
-  EyeOff
+  EyeOff,
+  CheckCircle,
+  Clock,
+  Plus
 } from "lucide-react"
-
-const mockApplicants = [
-  { id: "101", name: "Ayesha Rahman", gender: "Female", age: 24, location: "Dhaka", education: "BSc in CSE", status: "Seen" },
-  { id: "102", name: "Rahim Ahmed", gender: "Male", age: 28, location: "Chattogram", education: "MBA", status: "Unseen" },
-  { id: "103", name: "Nusrat Jahan", gender: "Female", age: 23, location: "Sylhet", education: "BA in English", status: "Seen" },
-  { id: "104", name: "Tanvir Hasan", gender: "Male", age: 30, location: "Rajshahi", education: "BBA", status: "Unseen" },
-  { id: "105", name: "Mim Akter", gender: "Female", age: 25, location: "Khulna", education: "BSc in Pharmacy", status: "Seen" },
-]
+import { personRoutes } from "@/src/Service/person.route"
+import personType from "@/src/Service/type"
+import { toast } from "sonner"
+import Link from "next/link"
+import { Router } from "next/router"
 
 export default function AllApplicantPage() {
+  const [mockApplicants, setMockApplicants] = useState<personType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchApplicants = async () => {
+    try {
+      const data = await personRoutes.getPersons();
+      setMockApplicants(data);
+    } catch (error) {
+      console.error("Error fetching applicants:", error);
+      toast.error("Failed to load applicants");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchApplicants();
+  }, []);
+
+  const handleApprove = async (id: string) => {
+    try {
+      const toastId = toast.loading("Approving applicant...");
+      await personRoutes.approvePerson(id, { isSeen: true });
+      
+      // Update local state
+      setMockApplicants(prev => prev.map(app => 
+        app._id === id ? { ...app, isSeen: true } : app
+      ));
+      
+      toast.success("Applicant approved successfully", { id: toastId });
+    } catch (error) {
+      toast.error("Failed to approve applicant");
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this applicant?")) return;
+
+    const toastId = toast.loading("Deleting applicant...");
+    try {
+      await personRoutes.deletePerson(id);
+      
+      // Update local state
+      setMockApplicants(prev => prev.filter(app => app._id !== id));
+      
+      toast.success("Applicant deleted successfully", { id: toastId });
+    } catch (error) {
+      toast.error("Failed to delete applicant", { id: toastId });
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="p-10 flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 lg:p-10 space-y-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -44,10 +103,10 @@ export default function AllApplicantPage() {
               className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-10 pr-4 py-2 text-sm outline-none focus:ring-4 focus:ring-indigo-600/10 focus:border-indigo-600/50 transition-all"
             />
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 border border-zinc-200 dark:border-zinc-800 rounded-md text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
-            <Filter size={16} />
-            Filter
-          </button>
+          <Link href="/dashboard/admin/add-applicant" className="flex items-center gap-2 px-4 py-2 border border-black dark:border-zinc-800 rounded-sm bg-black text-white hover:bg-white hover:text-black text-sm font-medium  transition-colors">
+            <Plus size={16} />
+            Add Applicant
+          </Link>
         </div>
       </div>
 
@@ -65,13 +124,13 @@ export default function AllApplicantPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
-              {mockApplicants.map((app) => (
-                <tr key={app.id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/20 transition-colors group">
-                  <td className="px-6 py-4 text-sm font-mono text-zinc-400">#{app.id}</td>
+              {mockApplicants.map((app : personType) => (
+                <tr key={app._id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/20 transition-colors group">
+                  <td className="px-6 py-4 text-sm font-mono text-zinc-400">#{ app._id.slice(-6)}</td>
                   <td className="px-6 py-4">
                     <div className="flex flex-col">
                       <span className="text-sm font-bold text-zinc-900 dark:text-white">{app.name}</span>
-                      <span className="text-[11px] text-zinc-500">{app.education}</span>
+                      <span className="text-[12px] text-zinc-500 uppercase">{'Edu: '+ app.education}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -81,28 +140,43 @@ export default function AllApplicantPage() {
                       {app.gender}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-zinc-500">{app.location}</td>
+                  <td className="px-6 py-4 text-sm text-zinc-500">{app.division}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                       {app.status === "Seen" ? (
-                         <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                           <Eye size={12} />
-                           <span className="text-[11px] font-medium tracking-tight">Reviewed</span>
+                       {app.isSeen === true ? (
+                         <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 bg-green-500/15 p-1.5 rounded-sm">
+                           <CheckCircle size={12} />
+                           <span className="text-[12px] font-semibold tracking-tight ">Approved</span>
                          </div>
                        ) : (
-                         <div className="flex items-center gap-1.5 text-zinc-400">
-                           <EyeOff size={12} />
-                           <span className="text-[11px] font-medium tracking-tight">Pending</span>
+                         <div className="flex items-center gap-1.5 text-amber-500 bg-amber-500/15 p-1.5 rounded-sm">
+                           <Clock size={12} />
+                           <span className="text-[12px] font-semibold tracking-tight">Pending</span>
                          </div>
                        )}
                     </div>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button className="p-2 text-zinc-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-md transition-all">
+                    <div className="flex items-center justify-end gap-2 transition-opacity">
+                      {app.isSeen && (
+                        <button 
+                          onClick={() => handleApprove(app._id)}
+                          className="p-2 text-zinc-600 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md transition-all tooltip"
+                          title="Approve"
+                        >
+                          <CheckCircle size={16} />
+                        </button>
+                      )}
+                      <Link 
+                        href={`/dashboard/admin/all-applicant/${app._id}`}
+                        className="p-2 text-zinc-600 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-md transition-all"
+                      >
                         <Edit size={16} />
-                      </button>
-                      <button className="p-2 text-zinc-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-md transition-all">
+                      </Link>
+                      <button 
+                        onClick={() => handleDelete(app._id)}
+                        className="p-2 text-zinc-600 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-md transition-all"
+                      >
                         <Trash2 size={16} />
                       </button>
                     </div>
@@ -111,16 +185,19 @@ export default function AllApplicantPage() {
               ))}
             </tbody>
           </table>
+          {mockApplicants.length === 0 && (
+            <div className="p-10 text-center text-zinc-500 text-sm">
+              No applicants found.
+            </div>
+          )}
         </div>
 
         {/* Pagination Placeholder */}
         <div className="px-6 py-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
-          <p className="text-xs text-zinc-500">Showing <span className="font-bold text-zinc-900 dark:text-white">5</span> of <span className="font-bold text-zinc-900 dark:text-white">128</span> entries</p>
+          <p className="text-xs text-zinc-500">Showing <span className="font-bold text-zinc-900 dark:text-white">{mockApplicants.length}</span> entries</p>
           <div className="flex items-center gap-2">
             <button disabled className="p-2 border border-zinc-200 dark:border-zinc-800 rounded-md opacity-50"><ChevronLeft size={16} /></button>
             <button className="px-3 py-1 bg-indigo-600 text-white rounded-md text-xs font-bold">1</button>
-            <button className="px-3 py-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md text-xs font-medium">2</button>
-            <button className="px-3 py-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md text-xs font-medium">3</button>
             <button className="p-2 border border-zinc-200 dark:border-zinc-800 rounded-md hover:bg-zinc-50"><ChevronRight size={16} /></button>
           </div>
         </div>
