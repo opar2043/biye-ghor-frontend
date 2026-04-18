@@ -5,6 +5,7 @@ import { ThemeProvider } from "./components/ui/theme-provider";
 import { Navbar } from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import { Toaster } from "sonner";
+import AuthProvider from "./components/lib/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,16 +33,18 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen antialiased" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
-          enableSystem={false} // 🔥 IMPORTANT: avoids hydration mismatch
+          enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
-            <Toaster richColors  />
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </ThemeProvider>
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );

@@ -1,121 +1,7 @@
-"use client";
-
-// import React from "react";
-// import Link from "next/link";
-// import { FiPhone, FiMapPin, FiCalendar } from "react-icons/fi";
-
-// type Person = {
-//   _id: string;
-//   name: string;
-//   number: string;
-//   adress: string;
-//   age: number;
-//   gender: string;
-//   color: string;
-//   hairColor: string;
-//   eyeColor: string;
-//   education: string;
-//   appoionmentAdress: string;
-//   isSeen: boolean;
-// };
-
-// function getInitials(name: string) {
-//   return name
-//     .split(" ")
-//     .map((w) => w[0])
-//     .join("")
-//     .slice(0, 2)
-//     .toUpperCase();
-// }
-
-// export default function Card({ p }: { p: Person }) {
-//   const isFemale = p.gender === "Female";
-
-//   return (
-//     <div className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200">
-
-//       {/* Top */}
-//       <div className="flex items-start gap-3 p-5 pb-3 relative">
-//         <div
-//           className={`w-12 h-12 rounded-full flex items-center justify-center font-medium text-sm ${
-//             isFemale
-//               ? "bg-purple-100 text-purple-800"
-//               : "bg-green-100 text-green-800"
-//           }`}
-//         >
-//           {getInitials(p.name)}
-//         </div>
-
-//         <div className="flex-1 min-w-0">
-//           <p className="font-medium text-sm text-gray-900 truncate">
-//             {p.name}
-//           </p>
-//           <p className="text-xs text-gray-400">ID #{p._id}</p>
-//         </div>
-
-//         <div
-//           className={`w-2.5 h-2.5 rounded-full mt-1 ${
-//             p.isSeen ? "bg-green-500" : "bg-red-500"
-//           }`}
-//         />
-//       </div>
-
-//       {/* Tags */}
-//       <div className="flex flex-wrap gap-2 px-5 pb-3 text-xs">
-//         <span className="px-2 py-0.5 rounded-full bg-pink-100 text-pink-700">
-//           {p.gender}
-//         </span>
-//         <span className="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700">
-//           {p.age} yrs
-//         </span>
-//         <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
-//           {p.education}
-//         </span>
-//       </div>
-
-//       {/* Info */}
-//       <div className="px-5 pb-3 space-y-2 text-xs text-gray-500">
-//         <div className="flex items-center gap-2">
-//           <FiPhone className="text-gray-400" />
-//           <span className="truncate">{p.number}</span>
-//         </div>
-//         <div className="flex items-center gap-2">
-//           <FiMapPin className="text-gray-400" />
-//           <span className="truncate">{p.adress}</span>
-//         </div>
-//         <div className="flex items-center gap-2">
-//           <FiCalendar className="text-gray-400" />
-//           <span className="truncate">{p.appoionmentAdress}</span>
-//         </div>
-//       </div>
-
-//       {/* Divider */}
-//       <div className="mx-5 border-t border-gray-200" />
-
-//       {/* Actions */}
-//       <div className="flex gap-2 p-5 pt-3">
-//         <Link
-//           href={`/applicant/${p._id}`}
-//           className="flex-1 text-center py-1.5 text-xs rounded-md border border-indigo-500 text-indigo-600 hover:bg-indigo-100 transition"
-//         >
-//           View Profile
-//         </Link>
-
-//         <a
-//           href={`tel:${p.number}`}
-//           className="flex-1 text-center py-1.5 text-xs rounded-md border border-green-600 text-green-600 hover:bg-green-100 transition"
-//         >
-//           Contact
-//         </a>
-//       </div>
-//     </div>
-//   );
-// }
-
-
+'use client'
 import React from 'react'
 import Link from 'next/link'
- 
+
 type Person = {
   _id: string
   name: string
@@ -129,136 +15,70 @@ type Person = {
   education: string
   appoionmentAdress: string
   isSeen: boolean
-}
- 
-function getInitials(name: string) {
-  return name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()
-}
- 
-function PhoneIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.71 3.41 2 2 0 0 1 3.68 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.66a16 16 0 0 0 6.06 6.06l1.02-1.02a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-  )
-}
- 
-function PinIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  )
-}
- 
-function CalendarIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
-  )
+  images?: string[]
 }
 
-function MaleIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-      <path d="M16 3h5v5"/><path d="m21 3-6.7 6.7"/><circle cx="10" cy="14" r="6"/>
-    </svg>
-  )
-}
-
-function FemaleIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-      <circle cx="12" cy="9" r="6"/><path d="M12 15v7"/><path d="M9 19h6"/>
-    </svg>
-  )
-}
- 
 export default function Card({ p }: { p: Person }) {
-  const isFemale = p.gender === 'Female'
- 
+  const profileImage = p.images?.[0] || `https://api.dicebear.com/7.x/avataaars/svg?seed=${p.name}`
+  
+  // Extract district from address (assuming "District, Country" or similar)
+  const addressParts = p.adress.split(',')
+  const district = addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : p.adress.trim()
+
   return (
-    <div className="bg-card rounded-2xl border border-border overflow-hidden hover:border-primary/30 hover:shadow-md transition-all duration-200">
- 
-      {/* Top */}
-      <div className="flex items-start gap-3 p-5 pb-3 relative">
-        <div
-          className="w-12 h-12 rounded-full flex items-center justify-center font-medium text-sm shrink-0"
-          style={{
-            background: isFemale ? '#EEEDFE' : '#E1F5EE',
-            color: isFemale ? '#3C3489' : '#085041',
-          }}
-        >
-          {getInitials(p.name)}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="font-medium text-[15px] text-foreground truncate">{p.name}</p>
-          <p className="text-xs text-muted-foreground">ID #{p._id}</p>
-        </div>
-        <div
-          title={p.isSeen ? 'Seen' : 'Not seen'}
-          className="w-2.5 h-2.5 rounded-full shrink-0 mt-1"
-          style={{ background: p.isSeen ? '#1D9E75' : '#E24B4A' }}
+    <div className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group max-w-sm mx-auto w-full">
+      {/* Full Width Image (Facebook Profile Style) */}
+      <div className="aspect-[4/5] relative overflow-hidden bg-gray-50">
+        <img 
+          src={profileImage} 
+          alt={p.name}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
-      </div>
- 
-      {/* Tags */}
-      <div className="flex flex-wrap gap-1.5 px-5 pb-3">
-        <span className="text-[11px] px-2.5 py-0.5 rounded-full flex items-center gap-1" style={{ background: '#FBEAF0', color: '#72243E' }}>
-          {isFemale ? <FemaleIcon /> : <MaleIcon />}
-          {p.gender}
-        </span>
-        <span className="text-[11px] px-2.5 py-0.5 rounded-full" style={{ background: '#FAEEDA', color: '#633806' }}>
-          {p.age} yrs
-        </span>
-        <span className="text-[11px] px-2.5 py-0.5 rounded-full" style={{ background: '#E6F1FB', color: '#0C447C' }}>
-          {p.education}
-        </span>
-      </div>
- 
-      {/* Info rows */}
-      <div className="px-5 pb-3 space-y-1.5">
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <PhoneIcon /> <span className="truncate">{p.number}</span>
+        
+        {/* Status Indicator */}
+        <div className="absolute top-4 right-4">
+          <span 
+            className={`flex h-3 w-3 rounded-full border-2 border-white shadow-sm ${p.isSeen ? 'bg-green-500' : 'bg-red-500'}`}
+          />
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <PinIcon /> <span className="truncate">{p.adress}</span>
-        </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <CalendarIcon /> <span className="truncate">{p.appoionmentAdress}</span>
-        </div>
+
+        {/* Visual Overlay for hover */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
       </div>
- 
-      {/* Divider */}
-      <div className="mx-5 border-t border-border" />
- 
-      {/* Actions */}
-      <div className="flex gap-2 p-5 pt-3">
+
+      {/* Profile Info */}
+      <div className="p-5">
+        <div className="text-center mb-5">
+          <h3 className="font-bold text-[1.1rem] text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">
+            {p.name}
+          </h3>
+          <div className="flex items-center justify-center gap-1.5 mt-1">
+            <svg 
+              className="w-3.5 h-3.5 text-gray-400" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <p className="text-[13px] font-medium text-gray-500 uppercase tracking-wide">
+              {district}
+            </p>
+          </div>
+        </div>
+
+        {/* View Profile Button (Facebook Style) */}
         <Link
           href={`/applicant/${p._id}`}
-          className="flex-1 text-center py-1.5 text-xs rounded-lg border transition-colors duration-150"
-          style={{ borderColor: '#534AB7', color: '#534AB7' }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgb(83 74 183 / 0.1)')}
-          onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+          className="flex items-center justify-center gap-2 w-full py-2.5 bg-[#e4e6eb] hover:bg-[#d8dadf] text-[#050505] text-[14px] font-bold rounded-lg transition-all duration-200 active:scale-[0.98]"
         >
-          View profile
+          View Profile
         </Link>
-        <a
-          href={`tel:${p.number}`}
-          className="flex-1 text-center py-1.5 text-xs rounded-lg border transition-colors duration-150"
-          style={{ borderColor: '#0F6E56', color: '#0F6E56' }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgb(15 110 86 / 0.1)')}
-          onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-        >
-          Contact
-        </a>
       </div>
     </div>
   )
 }
- 

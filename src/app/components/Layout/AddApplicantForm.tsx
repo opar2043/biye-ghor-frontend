@@ -20,8 +20,10 @@ import { DIVISIONS, BANGLADESH_LOCATIONS } from "../../constants/locationData"
 import { personRoutes } from "@/src/Service/person.route"
 import personType from "@/src/Service/type"
 import { toast } from "sonner"
+import { useAuth } from "../lib/useAuth"
 
 export default function AddApplicantForm() {
+  const { user } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState<personType>({
@@ -42,7 +44,7 @@ export default function AddApplicantForm() {
     isApprove: false,
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: any) => {
     const { name, value, type } = e.target
     setFormData(prev => {
       const newData = { 
@@ -61,7 +63,7 @@ export default function AddApplicantForm() {
     try {
       // Remove _id for new entries
       const { _id, ...submitData } = formData
-      const data = await personRoutes.addPerson(submitData as personType)
+      const data = await personRoutes.addPerson({ ...submitData, userEmail: user?.email } as personType)
       if (data) {
         toast.success("Applicant added successfully", { id: toastId })
         setIsSubmitted(true)

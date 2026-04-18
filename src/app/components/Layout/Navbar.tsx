@@ -33,14 +33,16 @@ interface NavbarProps {
   onLogout?: () => void
 }
 
-// ─── User Menu ────────────────────────────────────────────────
-interface UserMenuProps {
-  user: NavbarProps["user"]
-  onLogin?: () => void
-  onLogout?: () => void
-}
 
-function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+import { useAuth } from "../lib/useAuth"
+
+// ... (navLinks remain the same)
+
+function UserMenu() {
+  const { user, handleLogout } = useAuth();
+  const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const ref = React.useRef<HTMLDivElement>(null)
 
@@ -52,9 +54,19 @@ function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
     return () => document.removeEventListener("mousedown", handler)
   }, [])
 
-  const initials = user?.name
-    ? user.name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
-    : null
+  const initials = user?.displayName
+    ? user.displayName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
+    : user?.email?.[0].toUpperCase() || "U"
+
+  const onSignOut = async () => {
+    try {
+      await handleLogout()
+      toast.success("Logged out successfully")
+      router.push("/")
+    } catch (error) {
+      toast.error("Failed to log out")
+    }
+  }
 
   return (
     <div ref={ref} className="relative">
@@ -72,10 +84,10 @@ function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
       >
         {/* Avatar */}
         <span className="flex items-center justify-center w-6 h-6 rounded-full bg-zinc-300 dark:bg-zinc-600 text-zinc-700 dark:text-zinc-100 text-[10px] font-bold">
-          {initials ?? <User className="w-3.5 h-3.5" />}
+          {initials}
         </span>
         <span className="hidden sm:block">
-          {user ? (user.name?.split(" ")[0] ?? "Account") : "Sign in"}
+          {user ? (user.displayName?.split(" ")[0] ?? "Account") : "Sign in"}
         </span>
         <ChevronDown
           className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
@@ -98,9 +110,9 @@ function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
                 <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mb-0.5 uppercase tracking-wider">
                   Signed in as
                 </p>
-                {user.name && (
+                {user.displayName && (
                   <p className="text-sm font-semibold text-zinc-900 dark:text-white truncate">
-                    {user.name}
+                    {user.displayName}
                   </p>
                 )}
                 <p className="text-xs text-zinc-400 dark:text-zinc-500 truncate">
@@ -125,7 +137,7 @@ function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
               {/* Logout */}
               <div className="p-1.5">
                 <button
-                  onClick={() => { onLogout?.(); setOpen(false) }}
+                  onClick={onSignOut}
                   className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
@@ -138,19 +150,11 @@ function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
             <div className="p-1.5">
               <Link
                 href="/login"
-               
+                onClick={() => setOpen(false)}
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <LogIn className="w-4 h-4 text-zinc-400" />
                 Log in
-              </Link>
-              <Link
-                href="/dashboard"
-               
-                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-              >
-                <LayoutDashboard className="w-4 h-4 text-zinc-400" />
-                Dashboard
               </Link>
             </div>
           )}
@@ -161,7 +165,8 @@ function UserMenu({ user, onLogin, onLogout }: UserMenuProps) {
 }
 
 // ─── Navbar ───────────────────────────────────────────────────
-export function Navbar({ user, onLogin, onLogout }: NavbarProps) {
+export function Navbar() {
+  const { user } = useAuth()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const pathname = usePathname()
 
@@ -178,7 +183,7 @@ export function Navbar({ user, onLogin, onLogout }: NavbarProps) {
             BG
           </div>
           <span className="font-bold text-[15px] tracking-tight text-zinc-900 dark:text-white hidden sm:block">
-            Biye Ghor
+            Ollo
           </span>
         </Link>
 
@@ -208,8 +213,7 @@ export function Navbar({ user, onLogin, onLogout }: NavbarProps) {
         {/* ── RIGHT: Actions ─────────────────────────────── */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <UserMenu user={user} onLogin={onLogin} onLogout={onLogout} />
-
+          <UserMenu />
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen((p) => !p)}

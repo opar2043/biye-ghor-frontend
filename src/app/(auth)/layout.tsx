@@ -16,7 +16,7 @@ export default function AuthLayout({
             <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
               <span className="text-black font-black text-xl italic select-none">B</span>
             </div>
-            <span className="font-bold text-xl tracking-tight">Biye Ghor</span>
+            <span className="font-bold text-xl tracking-tight">Ollo</span>
           </div>
           
           <h2 className="text-5xl font-black leading-[1.1] tracking-tight max-w-md">
@@ -28,10 +28,10 @@ export default function AuthLayout({
 
         <div className="relative z-10">
           <p className="text-zinc-400 text-sm max-w-xs leading-relaxed">
-            Joining Biye Ghor means joining a community built on trust, sincerity, and the pursuit of lifelong companionship.
+            Joining Ollo means joining a community built on trust, sincerity, and the pursuit of lifelong companionship.
           </p>
           <div className="mt-6 flex items-center gap-4 text-xs text-zinc-500">
-            <span>&copy; 2026 Biye Ghor</span>
+            <span>&copy; 2026 Ollo</span>
             <span>Privacy Policy</span>
           </div>
         </div>

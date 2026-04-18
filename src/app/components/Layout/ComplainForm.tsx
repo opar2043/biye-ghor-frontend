@@ -11,10 +11,16 @@ import {
   AlertCircle,
   Users
 } from "lucide-react"
+import { complainRoutes } from "@/src/Service/complain.route";
+import { toast } from "sonner";
+import { useAuth } from "../lib/useAuth";
+import { useEffect } from "react";
 
-export default function ComplainForm() {
+export default  function ComplainForm() {
+  const { user  } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,6 +28,16 @@ export default function ComplainForm() {
     reason: "",
     message: ""
   })
+
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.displayName || prev.name,
+        email: user.email || prev.email
+      }))
+    }
+  }, [user])
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -32,11 +48,25 @@ export default function ComplainForm() {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
+    const obj = {
+      name: formData.name,
+      email: formData.email,
+      opponentName: formData.opponentName,
+      reason: formData.reason,
+      message: formData.message
+    }
+    const toastId = toast.loading("Creating complain...");
+
+     try{
+    const data = await complainRoutes.createComplain(obj);
+    toast.success("Complain created successfully", { id: toastId });
     setIsSubmitting(false)
     setIsSubmitted(true)
+     }catch(error){
+      console.log(error);
+      toast.error("Failed to create complain", { id: toastId });
+      setIsSubmitting(false)
+     }
   }
 
   if (isSubmitted) {

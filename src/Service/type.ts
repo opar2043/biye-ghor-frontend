@@ -15,7 +15,9 @@ type personType = {
     isSeen: boolean,
     district: string,
     division: string,
-    isApprove: boolean
+    isApprove: boolean,
+    images?: string[],
+    userEmail?: string
 
 }
 

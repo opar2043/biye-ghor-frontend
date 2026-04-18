@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-// import { personRoutes } from '@/src/Service/person.route'
+import InstagramProfile from "@/src/app/components/Profile/InstagramProfile";
 
 type Person = {
   _id: string;
@@ -15,9 +15,10 @@ type Person = {
   education: string;
   appoionmentAdress: string;
   isSeen: boolean;
+  images?: string[];
 };
 
-// ── Temporary mock — replace with your real fetch ──────
+// ── Mock data with image placeholders ──────
 const persons: Person[] = [
   {
     _id: "1",
@@ -32,6 +33,12 @@ const persons: Person[] = [
     education: "BSc in CSE",
     appoionmentAdress: "Dhanmondi, Dhaka",
     isSeen: false,
+    images: [
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80",
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=80",
+      "https://images.unsplash.com/photo-1554151228-14d9def656e4?w=800&q=80"
+    ]
   },
   {
     _id: "2",
@@ -46,6 +53,11 @@ const persons: Person[] = [
     education: "MBA",
     appoionmentAdress: "Agrabad, Chattogram",
     isSeen: true,
+    images: [
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+      "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=800&q=80"
+    ]
   },
   {
     _id: "3",
@@ -60,6 +72,10 @@ const persons: Person[] = [
     education: "BA in English",
     appoionmentAdress: "Zindabazar, Sylhet",
     isSeen: false,
+    images: [
+      "https://images.unsplash.com/photo-1567532939604-b6c5b0ad2e01?w=800&q=80",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80"
+    ]
   },
   {
     _id: "4",
@@ -74,6 +90,9 @@ const persons: Person[] = [
     education: "BBA",
     appoionmentAdress: "Shaheb Bazar, Rajshahi",
     isSeen: true,
+    images: [
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80"
+    ]
   },
   {
     _id: "5",
@@ -161,26 +180,6 @@ const persons: Person[] = [
   },
 ];
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
-function DetailRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-start gap-3 py-3 border-b border-black/[0.06] last:border-none">
-      <span className="text-xs text-gray-400 w-28 shrink-0 pt-0.5">
-        {label}
-      </span>
-      <span className="text-sm text-gray-800 flex-1">{value}</span>
-    </div>
-  );
-}
-
 export default async function ViewCard({
   params,
 }: {
@@ -207,100 +206,6 @@ export default async function ViewCard({
     );
   }
 
-  const isFemale = p.gender === "Female";
-
-  return (
-    <div className="min-h-screen bg-[#f8f7f5] py-10 px-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Back */}
-        <Link
-          href="/applicant"
-          className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 mb-6 transition-colors"
-        >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="19" y1="12" x2="5" y2="12" />
-            <polyline points="12 19 5 12 12 5" />
-          </svg>
-          Back to applicants
-        </Link>
-
-        {/* Profile card */}
-        <div className="bg-white rounded-2xl border border-black/10 overflow-hidden">
-          {/* Header */}
-          <div className="flex items-center gap-4 p-6 border-b border-black/[0.06]">
-            <div
-              className="w-16 h-16 rounded-full flex items-center justify-center font-medium text-xl shrink-0"
-              style={{
-                background: isFemale ? "#EEEDFE" : "#E1F5EE",
-                color: isFemale ? "#3C3489" : "#085041",
-              }}
-            >
-              {getInitials(p.name)}
-            </div>
-            <div className="flex-1 min-w-0">
-              <h1 className="text-lg font-medium text-gray-900 truncate">
-                {p.name}
-              </h1>
-              <p className="text-sm text-gray-400 truncate">
-                {p.education} · {p.adress}
-              </p>
-              <div className="mt-1.5">
-                <span
-                  className="text-[11px] px-2.5 py-0.5 rounded-full"
-                  style={{
-                    background: p.isSeen ? "#EAF3DE" : "#FCEBEB",
-                    color: p.isSeen ? "#27500A" : "#791F1F",
-                  }}
-                >
-                  {p.isSeen ? "Seen" : "Not seen"}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Details */}
-          <div className="px-6 py-2">
-            <DetailRow label="Phone" value={p.number} />
-            <DetailRow label="Address" value={p.adress} />
-            <DetailRow label="Appointment" value={p.appoionmentAdress} />
-            <DetailRow label="Age" value={`${p.age} years old`} />
-            <DetailRow label="Gender" value={p.gender} />
-            <DetailRow label="Skin tone" value={p.color} />
-            <DetailRow label="Hair color" value={p.hairColor} />
-            <DetailRow label="Eye color" value={p.eyeColor} />
-          </div>
-
-          {/* Footer actions */}
-          <div className="flex gap-2 p-6 pt-4 border-t border-black/[0.06]">
-            <Link
-              href="/applicant"
-              className="px-5 py-2 text-sm rounded-xl border border-black/15 text-gray-500 hover:bg-gray-50 transition-colors"
-            >
-              Back
-            </Link>
-            <a
-              href={`tel:${p.number}`}
-              className="flex-1 text-center py-2 text-sm rounded-xl font-medium transition-colors"
-              style={{
-                background: "#E1F5EE",
-                color: "#085041",
-                border: "0.5px solid #0F6E56",
-              }}
-            >
-              Call — {p.number}
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <InstagramProfile p={p} />;
 }
+

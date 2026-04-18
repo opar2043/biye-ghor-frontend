@@ -76,7 +76,7 @@ export default function DashboardLayout({children}: {children: React.ReactNode})
           <button onClick={() => setIsSidebarOpen(true)} className="p-2 -ml-2 text-zinc-500">
             <Menu size={20} />
           </button>
-          <span className="font-black text-lg tracking-tight text-indigo-600">Biye Ghor</span>
+          <span className="font-black text-lg tracking-tight text-indigo-600">Ollo</span>
           <div className="w-8" /> {/* Spacer */}
         </header>
 
