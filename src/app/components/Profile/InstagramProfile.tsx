@@ -7,12 +7,16 @@ import personType from '@/src/Service/type'
 export default function InstagramProfile({ p }: { p: personType }) {
   const [activeTab, setActiveTab] = useState('images')
   
-  const images = p.images && p.images.length > 0 ? p.images : [
-    `https://api.dicebear.com/7.x/avataaars/svg?seed=${p.name}`,
-    `https://api.dicebear.com/7.x/pixel-art/svg?seed=${p.name}`,
-    `https://api.dicebear.com/7.x/bottts/svg?seed=${p.name}`,
-    `https://api.dicebear.com/7.x/adventurer/svg?seed=${p.name}`
-  ]
+const images = Array.isArray(p.image)
+  ? p.image
+  : p.image
+    ? [p.image]
+    : [
+        `https://api.dicebear.com/7.x/avataaars/svg?seed=${p.name}`,
+        `https://api.dicebear.com/7.x/pixel-art/svg?seed=${p.name}`,
+        `https://api.dicebear.com/7.x/bottts/svg?seed=${p.name}`,
+        `https://api.dicebear.com/7.x/adventurer/svg?seed=${p.name}`
+      ];
 
   const tabs = [
     { id: 'images', label: 'Images', icon: (
@@ -20,7 +24,7 @@ export default function InstagramProfile({ p }: { p: personType }) {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
       </svg>
     )},
-    { id: 'details', label: 'Details', icon: (
+    { id: 'Video', label: 'Video', icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
@@ -30,7 +34,7 @@ export default function InstagramProfile({ p }: { p: personType }) {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     )},
-    { id: 'info', label: 'Info', icon: (
+    { id: 'About', label: 'About', icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
@@ -81,7 +85,7 @@ export default function InstagramProfile({ p }: { p: personType }) {
         <div className="md:hidden mb-6">
            <p className="font-bold text-sm text-gray-900">{p.name}</p>
            <p className="text-gray-600 text-sm">{p.education}</p>
-           <p className="text-gray-500 text-sm italic mt-1 font-hindi text-xs block">
+           <p className="text-gray-500  italic mt-1 font-hindi text-xs block">
               "Matching souls, building homes."
            </p>
            <p className="text-blue-900 text-sm font-medium mt-0.5">matrimony.com/{p._id}</p>
@@ -137,13 +141,13 @@ export default function InstagramProfile({ p }: { p: personType }) {
               <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest border-b pb-2">Personal Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
                 <DetailItem label="Age" value={`${p.age} years`} />
-                <DetailItem label="Gender" value={p.gender} />
-                <DetailItem label="Education" value={p.education} />
-                <DetailItem label="Skin Tone" value={p.color} />
-                <DetailItem label="Hair Color" value={p.hairColor} />
-                <DetailItem label="Eye Color" value={p.eyeColor} />
+                <DetailItem label="Gender" value={p.gender ?? "N/A"} />
+                <DetailItem label="Education" value={p.education ?? "N/A"} />
+                <DetailItem label="Skin Tone" value={p.color ?? "N/A"} />
+                <DetailItem label="Hair Color" value={p.hairColor ?? "N/A"} />
+                <DetailItem label="Eye Color" value={p.eyeColor ?? "N/A"} />
               </div>
-            </div>
+            </div>  
           )}
 
           {activeTab === 'contact' && (
@@ -187,7 +191,7 @@ export default function InstagramProfile({ p }: { p: personType }) {
                     Currently residing in {p.adress}, they are looking for a meaningful connection and a life partner who values tradition combined with modern perspectives.
                   </p>
                   <p>
-                    <strong>Appearance:</strong> {p.color} skin tone with {p.hairColor.toLowerCase()} hair and {p.eyeColor.toLowerCase()} eyes.
+                    <strong>Appearance:</strong> {p.color} skin tone with {p.hairColor?.toLowerCase() || "N/A"} hair and {p.eyeColor?.toLowerCase() || "N/A"} eyes.
                   </p>
                   <p>
                     <strong>Availability:</strong> Contact at {p.appoionmentAdress} for formal meetings and appointments.

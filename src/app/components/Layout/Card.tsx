@@ -17,10 +17,11 @@ type Person = {
   appoionmentAdress: string
   isSeen: boolean
   images?: string[]
+  image?: string
 }
 
 export default function Card({ p }: { p: Person }) {
-  const profileImage = p.images?.[0] || `https://api.dicebear.com/7.x/avataaars/svg?seed=${p.name}`
+  const profileImage = p.image || p.images?.[0] || `https://api.dicebear.com/7.x/avataaars/svg?seed=${p.name}`
   
   // Extract district from address (assuming "District, Country" or similar)
   const addressParts = p.adress.split(',')
@@ -57,7 +58,7 @@ export default function Card({ p }: { p: Person }) {
       {/* Profile Info */}
       <div className="p-5">
         <div className="text-center mb-5">
-          <h3 className="font-bold text-[1.1rem] text-gray-900 dark:text-zinc-100 tracking-tight group-hover:text-indigo-600 transition-colors">
+          <h3 className="font-bold text-[0.9rem] text-gray-900 dark:text-zinc-100 tracking-tight group-hover:text-indigo-600 transition-colors">
             {p.name}
           </h3>
           <div className="flex items-center justify-center gap-1.5 mt-1">

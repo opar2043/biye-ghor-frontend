@@ -28,12 +28,14 @@ export default function EditApplicantForm({ id }: { id: string }) {
   const [loading, setLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState<personType | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchApplicantData = async () => {
       try {
         const data = await personRoutes.getPersonById(id)
         setFormData(data)
+        if (data.image) setImagePreview(data.image)
       } catch (error) {
         toast.error("Failed to fetch applicant details")
         router.back()
@@ -45,7 +47,20 @@ export default function EditApplicantForm({ id }: { id: string }) {
   }, [id, router])
 
   const handleChange = (e: any) => {
-    const { name, value, type } = e.target
+    const { name, value, type, files } = e.target
+
+    if (type === "file" && files && files[0]) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setImagePreview(base64);
+        setFormData(prev => prev ? ({ ...prev, image: base64 }) : null);
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+
     setFormData(prev => {
       if (!prev) return null
       const newData = { 
@@ -134,6 +149,32 @@ export default function EditApplicantForm({ id }: { id: string }) {
               <FormField label="Education" icon={<GraduationCap size={18} />}>
                 <input required type="text" name="education" value={formData.education} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
+
+              <FormField label="Profile Image" icon={<Camera size={18} />}>
+                <div className="flex flex-col gap-3">
+                  <input 
+                    type="file" 
+                    name="image" 
+                    accept="image/*"
+                    onChange={handleChange} 
+                    className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md p-2 text-sm"
+                  />
+                  {imagePreview && (
+                    <img src={imagePreview} className="w-16 h-16 object-cover rounded-md border" alt="Preview" />
+                  )}
+                </div>
+              </FormField>
+
+              <FormField label="YouTube Link" icon={<Eye size={18} />}>
+                <input 
+                  type="text" 
+                  name="videoLink" 
+                  value={formData.videoLink || ""} 
+                  onChange={handleChange} 
+                  placeholder="Paste YouTube URL here" 
+                  className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all"
+                />
+              </FormField>
             </div>
           </div>
 
@@ -159,6 +200,45 @@ export default function EditApplicantForm({ id }: { id: string }) {
                 <input required type="text" name="eyeColor" value={formData.eyeColor} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
             </div>
+          </div>
+
+          {/* Section: Location Details */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-md flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+                <Map size={20} />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Location & Appointment</h3>
+                <p className="text-sm text-zinc-500">Address and meeting preferences</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-7">
+              <FormField label="Division" icon={<Map size={18} />}>
+                <select required name="division" value={formData.division} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all">
+                  <option value="">Select Division</option>
+                  {(Object.keys(BANGLADESH_LOCATIONS)).map(div => <option key={div} value={div}>{div}</option>)}
+                </select>
+              </FormField>
+
+              <FormField label="District" icon={<MapPin size={18} />}>
+                <select required name="district" value={formData.district} onChange={handleChange} disabled={!formData.division} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all disabled:opacity-50">
+                  <option value="">Select District</option>
+                  {formData.division && (BANGLADESH_LOCATIONS as any)[formData.division]?.map((dist: string) => <option key={dist} value={dist}>{dist}</option>)}
+                </select>
+              </FormField>
+
+              <div className="sm:col-span-2">
+                <FormField label="Appointment Address" icon={<MapPin size={18} />}>
+                  <input required type="text" name="appoionmentAdress" value={formData.appoionmentAdress} onChange={handleChange} placeholder="Specific area or office address" className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
+                </FormField>
+              </div>
+            </div>
+            
+            <FormField label="Full Address" icon={<MapPin size={18} />}>
+              <textarea required name="adress" value={formData.adress} onChange={handleChange} placeholder="Full residential address..." rows={3} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all resize-none" />
+            </FormField>
           </div>
 
           <button

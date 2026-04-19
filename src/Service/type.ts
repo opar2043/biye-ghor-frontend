@@ -7,18 +7,18 @@ type personType = {
     adress: string,
     age: number,
     gender: string,
-    color: string,
-    hairColor: string,
-    eyeColor: string,
-    education: string,
-    appoionmentAdress: string,
-    isSeen: boolean,
+    color?: string,
+    hairColor?: string,
+    eyeColor?: string,
+    education?: string,
+    appoionmentAdress?: string,
+    isSeen?: boolean,
     district: string,
     division: string,
-    isApprove: boolean,
-    images?: string[],
-    userEmail?: string
-
+    isApprove?: boolean,
+    image: string,
+    videoLink?: string,
+    email: string,
 }
 
 export default personType

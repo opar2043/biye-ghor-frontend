@@ -26,6 +26,7 @@ import Loading from "@/src/app/components/ui/Loading"
 
 export default function AllApplicantPage() {
   const [mockApplicants, setMockApplicants] = useState<personType[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
   const fetchApplicants = async () => {
@@ -43,6 +44,11 @@ export default function AllApplicantPage() {
   useEffect(() => {
     fetchApplicants();
   }, []);
+
+  const filteredApplicants = mockApplicants.filter(app => 
+    app.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    app._id.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleToggleStatus = async (id: string, currentStatus: boolean) => {
     try {
@@ -99,6 +105,8 @@ export default function AllApplicantPage() {
             <input 
               type="text" 
               placeholder="Search by ID or name..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-10 pr-4 py-2 text-sm outline-none focus:ring-4 focus:ring-indigo-600/10 focus:border-indigo-600/50 transition-all"
             />
           </div>
@@ -123,9 +131,18 @@ export default function AllApplicantPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
-              {mockApplicants.map((app : personType) => (
+              {filteredApplicants.map((app : personType) => (
                 <tr key={app._id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/20 transition-colors group">
-                  <td className="px-6 py-4 text-sm font-mono text-zinc-400">#{ app._id.slice(-6)}</td>
+                  <td className="px-6 py-4 text-sm font-mono text-zinc-400">
+                    <div className="flex items-center gap-3">
+                      <img 
+                        src={app.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${app.name}`} 
+                        className="w-8 h-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-800" 
+                        alt=""
+                      />
+                      <span>#{ app._id.slice(-6)}</span>
+                    </div>
+                  </td>
                   <td className="px-6 py-4">
                     <div className="flex flex-col">
                       <span className="text-sm font-bold text-zinc-900 dark:text-white">{app.name}</span>
@@ -158,7 +175,7 @@ export default function AllApplicantPage() {
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2 transition-opacity">
                         <button 
-                          onClick={() => handleToggleStatus(app._id, app.isSeen)}
+                          onClick={() => handleToggleStatus(app._id, app.isSeen || false)}
                           className={`p-2 rounded-md transition-all tooltip ${
                             app.isSeen 
                               ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20" 
@@ -186,16 +203,16 @@ export default function AllApplicantPage() {
               ))}
             </tbody>
           </table>
-          {mockApplicants.length === 0 && (
+          {filteredApplicants.length === 0 && (
             <div className="p-10 text-center text-zinc-500 text-sm">
-              No applicants found.
+              No applicants found matching "{searchQuery}".
             </div>
           )}
         </div>
 
         {/* Pagination Placeholder */}
         <div className="px-6 py-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
-          <p className="text-xs text-zinc-500">Showing <span className="font-bold text-zinc-900 dark:text-white">{mockApplicants.length}</span> entries</p>
+          <p className="text-xs text-zinc-500">Showing <span className="font-bold text-zinc-900 dark:text-white">{filteredApplicants.length}</span> entries</p>
           <div className="flex items-center gap-2">
             <button disabled className="p-2 border border-zinc-200 dark:border-zinc-800 rounded-md opacity-50"><ChevronLeft size={16} /></button>
             <button className="px-3 py-1 bg-indigo-600 text-white rounded-md text-xs font-bold">1</button>

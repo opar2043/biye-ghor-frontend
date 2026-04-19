@@ -32,7 +32,7 @@ export default function AllApplicantPage() {
       const data = await personRoutes.getPersons();
       // Filter by user email if user is logged in
       const filteredData = user?.email 
-        ? data.filter((app: personType) => app.userEmail === user.email)
+        ? data.filter((app: personType) => app.email == user.email)
         : data;
       setMockApplicants(filteredData);
     } catch (error) {

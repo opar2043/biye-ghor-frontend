@@ -42,10 +42,27 @@ export default function AddApplicantForm() {
     adress: "",
     isSeen: false,
     isApprove: false,
+    image: "",
+    videoLink: "",
+    email: user?.email || ""
   })
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
 
   const handleChange = (e: any) => {
-    const { name, value, type } = e.target
+    const { name, value, type, files } = e.target
+
+    if (type === "file" && files && files[0]) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setImagePreview(base64);
+        setFormData(prev => ({ ...prev, image: base64 }));
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+
     setFormData(prev => {
       const newData = { 
         ...prev, 
@@ -63,7 +80,7 @@ export default function AddApplicantForm() {
     try {
       // Remove _id for new entries
       const { _id, ...submitData } = formData
-      const data = await personRoutes.addPerson({ ...submitData, userEmail: user?.email } as personType)
+      const data = await personRoutes.addPerson({ ...submitData } as personType)
       if (data) {
         toast.success("Applicant added successfully", { id: toastId })
         setIsSubmitted(true)
@@ -84,7 +101,11 @@ export default function AddApplicantForm() {
           adress: "",
           isSeen: false,
           isApprove: false,
+          image: "",
+          videoLink: "",
+          email: user?.email || ""
         })
+        setImagePreview(null)
       }
     } catch (error) {
       console.error("Submission error:", error)
@@ -192,6 +213,32 @@ export default function AddApplicantForm() {
                   onChange={handleChange} 
                   placeholder="e.g. BSc in CSE" 
                   className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                />
+              </FormField>
+
+              <FormField label="Profile Image" icon={<Camera size={18} />}>
+                <div className="flex flex-col gap-3">
+                  <input 
+                    type="file" 
+                    name="image" 
+                    accept="image/*"
+                    onChange={handleChange} 
+                    className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md p-2 text-sm"
+                  />
+                  {imagePreview && (
+                    <img src={imagePreview} className="w-16 h-16 object-cover rounded-md border" alt="Preview" />
+                  )}
+                </div>
+              </FormField>
+
+              <FormField label="YouTube Link" icon={<Eye size={18} />}>
+                <input 
+                  type="text" 
+                  name="videoLink" 
+                  value={formData.videoLink} 
+                  onChange={handleChange} 
+                  placeholder="Paste YouTube URL here" 
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:border-zinc-900 transition-all"
                 />
               </FormField>
             </div>
@@ -353,4 +400,3 @@ function FormField({ label, icon, children }: { label: string, icon: React.React
     </div>
   )
 }
-
