@@ -22,3 +22,14 @@ type personType = {
 }
 
 export default personType
+
+
+
+
+export type UserType = {
+    _id: string,
+    name: string,
+    email: string,
+    role: string
+}
+

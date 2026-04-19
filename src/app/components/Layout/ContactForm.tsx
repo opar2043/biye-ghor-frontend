@@ -65,7 +65,7 @@ export default function ContactForm() {
                         onChange={handleChange}
                         placeholder="e.g. Rahim Uddin"
                         className="
-                          w-full px-4 py-3 rounded-xl text-sm
+                          w-full px-4 py-3 rounded-md text-sm
                           bg-white dark:bg-zinc-950
                           border border-zinc-200 dark:border-zinc-700
                           text-zinc-900 dark:text-zinc-100
@@ -89,7 +89,7 @@ export default function ContactForm() {
                         onChange={handleChange}
                         placeholder="you@example.com"
                         className="
-                          w-full px-4 py-3 rounded-xl text-sm
+                          w-full px-4 py-3 rounded-md text-sm
                           bg-white dark:bg-zinc-950
                           border border-zinc-200 dark:border-zinc-700
                           text-zinc-900 dark:text-zinc-100
@@ -111,7 +111,7 @@ export default function ContactForm() {
                         value={form.subject}
                         onChange={handleChange}
                         className="
-                          w-full px-4 py-3 rounded-xl text-sm
+                          w-full px-4 py-3 rounded-md text-sm
                           bg-white dark:bg-zinc-950
                           border border-zinc-200 dark:border-zinc-700
                           text-zinc-900 dark:text-zinc-100
@@ -142,7 +142,7 @@ export default function ContactForm() {
                         onChange={handleChange}
                         placeholder="Write your message here…"
                         className="
-                          w-full px-4 py-3 rounded-xl text-sm resize-none
+                          w-full px-4 py-3 rounded-md text-sm resize-none
                           bg-white dark:bg-zinc-950
                           border border-zinc-200 dark:border-zinc-700
                           text-zinc-900 dark:text-zinc-100
@@ -159,7 +159,7 @@ export default function ContactForm() {
                       disabled={loading}
                       className="
                         mt-1 w-full flex items-center justify-center gap-2
-                        px-6 py-3.5 rounded-xl text-sm font-semibold
+                        px-6 py-3.5 rounded-md text-sm font-semibold
                         bg-zinc-900 dark:bg-white
                         text-white dark:text-zinc-900
                         hover:bg-zinc-700 dark:hover:bg-zinc-100

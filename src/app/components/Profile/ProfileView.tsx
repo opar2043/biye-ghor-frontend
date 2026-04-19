@@ -22,7 +22,7 @@ export function ProfileView() {
 
   return (
     <div className="max-w-2xl mx-auto p-6 md:py-20 animate-in fade-in duration-500">
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 md:p-12 shadow-sm">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-8 md:p-12 shadow-sm">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center space-y-4 mb-10">
           <div className="w-24 h-24 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-2xl font-black text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-700">
@@ -61,10 +61,10 @@ export function ProfileView() {
 
         {/* Footer Actions */}
         <div className="mt-12 flex gap-3">
-          <button className="flex-1 px-6 py-3 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 rounded-xl font-bold hover:opacity-90 transition-all text-sm">
+          <button className="flex-1 px-6 py-3 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 rounded-md font-bold hover:opacity-90 transition-all text-sm">
             Edit Information
           </button>
-          <button className="px-3.5 py-3 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all">
+          <button className="px-3.5 py-3 border border-zinc-200 dark:border-zinc-800 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all">
             <Settings size={20} className="text-zinc-500" />
           </button>
         </div>
@@ -77,7 +77,7 @@ function DetailItem({ label, value, icon }: { label: string, value: string, icon
   return (
     <div className="flex items-center justify-between group">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-zinc-50 dark:bg-zinc-800/50 flex items-center justify-center text-zinc-400 group-hover:text-indigo-600 transition-colors">
+        <div className="w-8 h-8 rounded-md bg-zinc-50 dark:bg-zinc-800/50 flex items-center justify-center text-zinc-400 group-hover:text-indigo-600 transition-colors">
           {icon}
         </div>
         <div>

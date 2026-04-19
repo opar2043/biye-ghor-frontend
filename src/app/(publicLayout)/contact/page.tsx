@@ -123,9 +123,9 @@ export default function ContactPage() {
               {contactInfo.map(({ icon: Icon, label, value, sub }) => (
                 <div
                   key={label}
-                  className="p-5 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 flex flex-col gap-3"
+                  className="p-5 rounded-md border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 flex flex-col gap-3"
                 >
-                  <div className="w-9 h-9 rounded-xl bg-zinc-900 dark:bg-white flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-md bg-zinc-900 dark:bg-white flex items-center justify-center">
                     <Icon className="w-4 h-4 text-white dark:text-zinc-900" />
                   </div>
                   <div>
@@ -152,7 +152,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`
-                      flex items-center gap-3 px-4 py-3 rounded-xl
+                      flex items-center gap-3 px-4 py-3 rounded-md
                       border border-zinc-100 dark:border-zinc-800
                       text-zinc-600 dark:text-zinc-400
                       bg-white dark:bg-zinc-950
@@ -186,7 +186,7 @@ export default function ContactPage() {
           <h2 className="text-2xl font-black text-zinc-900 dark:text-white mb-6">
             Come visit us
           </h2>
-          <div className="w-full h-64 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center overflow-hidden">
+          <div className="w-full h-64 rounded-md border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center overflow-hidden">
             {/* Replace this div with an actual <iframe> Google Map embed */}
             <div className="text-center">
               <MapPin className="w-8 h-8 text-zinc-300 dark:text-zinc-600 mx-auto mb-3" />

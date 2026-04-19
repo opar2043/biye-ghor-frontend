@@ -96,7 +96,7 @@ export default function AddApplicantForm() {
 
   if (isSubmitted) {
     return (
-      <div className="bg-white dark:bg-zinc-950 rounded-xl p-8 md:p-12 border border-zinc-200 dark:border-zinc-800 text-center animate-in zoom-in duration-500 shadow-2xl">
+      <div className="bg-white dark:bg-zinc-950 rounded-md p-8 md:p-12 border border-zinc-200 dark:border-zinc-800 text-center animate-in zoom-in duration-500 shadow-2xl">
         <div className="w-20 h-20 bg-emerald-50 dark:bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle2 className="w-10 h-10 text-emerald-500" />
         </div>
@@ -106,7 +106,7 @@ export default function AddApplicantForm() {
         </p>
         <button 
           onClick={() => setIsSubmitted(false)}
-          className="px-8 py-3 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 rounded-lg font-bold hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all flex items-center gap-2 mx-auto"
+          className="px-8 py-3 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 rounded-md font-bold hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all flex items-center gap-2 mx-auto"
         >
           <Plus size={18} />
           Add Another Applicant
@@ -116,14 +116,14 @@ export default function AddApplicantForm() {
   }
 
   return (
-    <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="p-6 md:p-10">
         <form onSubmit={handleSubmit} className="space-y-8 md:space-y-12">
           
           {/* Section: Basic Information */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-md flex items-center justify-center text-zinc-900 dark:text-zinc-100">
                 <User size={20} />
               </div>
               <div>
@@ -141,7 +141,7 @@ export default function AddApplicantForm() {
                   value={formData.name} 
                   onChange={handleChange} 
                   placeholder="e.g. Ayesha Rahman" 
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
                 />
               </FormField>
 
@@ -153,7 +153,7 @@ export default function AddApplicantForm() {
                   value={formData.number} 
                   onChange={handleChange} 
                   placeholder="e.g. 017XXXXXXXX" 
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
                 />
               </FormField>
 
@@ -165,7 +165,7 @@ export default function AddApplicantForm() {
                   value={formData.age || ""} 
                   onChange={handleChange} 
                   placeholder="e.g. 24" 
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
                 />
               </FormField>
 
@@ -175,7 +175,7 @@ export default function AddApplicantForm() {
                   name="gender" 
                   value={formData.gender} 
                   onChange={handleChange}
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer"
                 >
                   <option value="">Select Gender</option>
                   <option value="Male">Male</option>
@@ -191,7 +191,7 @@ export default function AddApplicantForm() {
                   value={formData.education} 
                   onChange={handleChange} 
                   placeholder="e.g. BSc in CSE" 
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
                 />
               </FormField>
             </div>
@@ -200,7 +200,7 @@ export default function AddApplicantForm() {
           {/* Section: Physical Appearance */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-md flex items-center justify-center text-zinc-900 dark:text-zinc-100">
                 <Camera size={20} />
               </div>
               <div>
@@ -218,7 +218,7 @@ export default function AddApplicantForm() {
                   value={formData.color} 
                   onChange={handleChange} 
                   placeholder="e.g. Fair" 
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
                 />
               </FormField>
 
@@ -230,7 +230,7 @@ export default function AddApplicantForm() {
                   value={formData.hairColor} 
                   onChange={handleChange} 
                   placeholder="e.g. Black" 
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
                 />
               </FormField>
 
@@ -242,7 +242,7 @@ export default function AddApplicantForm() {
                   value={formData.eyeColor} 
                   onChange={handleChange} 
                   placeholder="e.g. Brown" 
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
                 />
               </FormField>
             </div>
@@ -251,7 +251,7 @@ export default function AddApplicantForm() {
           {/* Section: Location Details */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-md flex items-center justify-center text-zinc-900 dark:text-zinc-100">
                 <Map size={20} />
               </div>
               <div>
@@ -267,7 +267,7 @@ export default function AddApplicantForm() {
                   name="division" 
                   value={formData.division} 
                   onChange={handleChange}
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer"
                 >
                   <option value="">Select Division</option>
                   {(Object.keys(BANGLADESH_LOCATIONS)).map(div => <option key={div} value={div}>{div}</option>)}
@@ -281,7 +281,7 @@ export default function AddApplicantForm() {
                   value={formData.district} 
                   onChange={handleChange} 
                   disabled={!formData.division}
-                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer disabled:opacity-50"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all appearance-none cursor-pointer disabled:opacity-50"
                 >
                   <option value="">Select District</option>
                   {formData.division && BANGLADESH_LOCATIONS[formData.division as keyof typeof BANGLADESH_LOCATIONS]?.map(dist => (
@@ -299,7 +299,7 @@ export default function AddApplicantForm() {
                     value={formData.appoionmentAdress} 
                     onChange={handleChange} 
                     placeholder="Specific area or office address" 
-                    className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
+                    className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all"
                   />
                 </FormField>
               </div>
@@ -313,7 +313,7 @@ export default function AddApplicantForm() {
                 onChange={handleChange} 
                 placeholder="Full residential address..." 
                 rows={3} 
-                className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all resize-none" 
+                className="w-full bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 dark:focus:border-zinc-100 transition-all resize-none" 
               />
             </FormField>
           </div>
@@ -321,7 +321,7 @@ export default function AddApplicantForm() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="w-full h-14 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 rounded-xl font-bold shadow-xl shadow-zinc-900/10 hover:bg-zinc-800 dark:hover:bg-zinc-200 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+            className="w-full h-14 bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 rounded-md font-bold shadow-xl shadow-zinc-900/10 hover:bg-zinc-800 dark:hover:bg-zinc-200 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
           >
             {isSubmitting ? (
               <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" />

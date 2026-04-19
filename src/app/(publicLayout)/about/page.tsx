@@ -167,7 +167,7 @@ export default function AboutPage() {
       {/* ── Stats ─────────────────────────────────────────── */}
       <section className="border-b border-zinc-100 dark:border-zinc-800/60">
         <div className="mx-auto max-w-5xl px-6 py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-zinc-100 dark:bg-zinc-800 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-zinc-100 dark:bg-zinc-800 rounded-md overflow-hidden border border-zinc-100 dark:border-zinc-800">
             {stats.map(({ value, label }) => (
               <div key={label} className="bg-white dark:bg-zinc-950 px-8 py-10 flex flex-col gap-1 items-center text-center">
                 <span className="text-3xl md:text-4xl font-black tracking-tight text-zinc-900 dark:text-white">
@@ -266,7 +266,7 @@ export default function AboutPage() {
                   <div className="hidden md:block absolute top-6 left-[calc(50%+24px)] w-full h-px border-t-2 border-dashed border-zinc-200 dark:border-zinc-800 z-0" />
                 )}
                 <div className="relative z-10 flex flex-col items-center text-center">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-500 dark:bg-indigo-600 flex items-center justify-center text-white font-black text-sm mb-4 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/40">
+                  <div className="w-12 h-12 rounded-md bg-indigo-500 dark:bg-indigo-600 flex items-center justify-center text-white font-black text-sm mb-4 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/40">
                     {number}
                   </div>
                   <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-2">{title}</h3>
@@ -306,7 +306,7 @@ export default function AboutPage() {
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/10 dark:to-blue-950/10" />
         <div className="relative mx-auto max-w-5xl px-6 py-24 text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-500 dark:bg-indigo-600 shadow-xl shadow-indigo-200 dark:shadow-indigo-900/40 mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-md bg-indigo-500 dark:bg-indigo-600 shadow-xl shadow-indigo-200 dark:shadow-indigo-900/40 mb-8">
             <Heart className="w-6 h-6 text-white fill-white" />
           </div>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-white mb-6">

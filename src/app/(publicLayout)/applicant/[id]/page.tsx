@@ -183,7 +183,7 @@ export default async function ViewCard({
           <p className="text-gray-400 text-sm mb-4">Profile not found.</p>
           <Link
             href="/applicant"
-            className="text-xs border border-black/20 px-4 py-2 rounded-lg hover:bg-black/5 transition"
+            className="text-xs border border-black/20 px-4 py-2 rounded-md hover:bg-black/5 transition"
           >
             ← Back to list
           </Link>

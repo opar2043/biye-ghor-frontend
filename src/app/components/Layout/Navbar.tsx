@@ -100,7 +100,7 @@ function UserMenu() {
           absolute right-0 top-[calc(100%+10px)] w-56 z-50
           bg-white dark:bg-zinc-900
           border border-zinc-200 dark:border-zinc-700
-          rounded-2xl shadow-xl shadow-black/10 dark:shadow-black/40
+          rounded-md shadow-xl shadow-black/10 dark:shadow-black/40
           overflow-hidden
         ">
           {user ? (
@@ -125,7 +125,7 @@ function UserMenu() {
                 <Link
                   href="/dashboard"
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   <LayoutDashboard className="w-4 h-4 text-zinc-400" />
                   Dashboard
@@ -138,7 +138,7 @@ function UserMenu() {
               <div className="p-1.5">
                 <button
                   onClick={onSignOut}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                   Log out
@@ -179,7 +179,7 @@ export function Navbar() {
           href="/"
           className="shrink-0 flex items-center gap-2.5 hover:opacity-80 transition-opacity"
         >
-          <div className="w-8 h-8 rounded-xl bg-zinc-900 dark:bg-white flex items-center justify-center text-white dark:text-zinc-900 text-xs font-black">
+          <div className="w-8 h-8 rounded-md bg-zinc-900 dark:bg-white flex items-center justify-center text-white dark:text-zinc-900 text-xs font-black">
             BG
           </div>
           <span className="font-bold text-[15px] tracking-tight text-zinc-900 dark:text-white hidden sm:block">
@@ -240,7 +240,7 @@ export function Navbar() {
                     href={href}
                     onClick={() => setMobileOpen(false)}
                     className={`
-                      flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-colors
+                      flex items-center px-4 py-2.5 rounded-md text-sm font-medium transition-colors
                       ${active
                         ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white"
                         : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-white"

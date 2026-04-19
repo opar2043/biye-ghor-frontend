@@ -1,4 +1,3 @@
-"use client"
 
 import React from "react"
 import { 
@@ -10,16 +9,19 @@ import {
   MoreVertical,
   Check
 } from "lucide-react"
+import { userApi } from "@/src/Service/users.route"
+import { UserType } from "@/src/Service/type"
 
-const mockUsers = [
-  { id: "1", name: "Super Admin", email: "admin@biyeghor.com", role: "admin" },
-  { id: "2", name: "Kamal Ahmed", email: "kamal.mod@example.com", role: "moderator" },
-  { id: "3", name: "Sumi Akter", email: "sumi.user@gmail.com", role: "user" },
-  { id: "4", name: "Tanvir Hossain", email: "tanvir.h@outlook.com", role: "user" },
-  { id: "5", name: "Mehedi Hasan", email: "mehedi@provider.net", role: "moderator" },
-]
+// const mockUsers = [
+//   { id: "1", name: "Super Admin", email: "admin@biyeghor.com", role: "admin" },
+//   { id: "2", name: "Kamal Ahmed", email: "kamal.mod@example.com", role: "moderator" },
+//   { id: "3", name: "Sumi Akter", email: "sumi.user@gmail.com", role: "user" },
+//   { id: "4", name: "Tanvir Hossain", email: "tanvir.h@outlook.com", role: "user" },
+//   { id: "5", name: "Mehedi Hasan", email: "mehedi@provider.net", role: "moderator" },
+// ]
 
-export default function UsersPage() {
+export default async function UsersPage() {
+  const mockUsers = await userApi.getAllUsers()
   return (
     <div className="p-6 lg:p-10 space-y-8">
       <div>
@@ -32,11 +34,11 @@ export default function UsersPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-         {mockUsers.map(user => (
-           <div key={user.id} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-6 relative group hover:border-blue-500/30 transition-all shadow-sm">
+         {mockUsers.map((user: UserType) => (
+           <div key={user._id} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-6 relative group hover:border-blue-500/30 transition-all shadow-sm">
              <div className="absolute right-4 top-4">
                <button className="p-1 px-2 text-[10px] font-bold uppercase tracking-tighter rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
-                 ID: {user.id}
+                 ID: {user._id}
                </button>
              </div>
 

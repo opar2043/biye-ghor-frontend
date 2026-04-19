@@ -97,7 +97,7 @@ export default function DashboardPage() {
             Welcome back! Here's what's happening across your platform today.
           </p>
         </div>
-        <div className="flex items-center gap-3 bg-white dark:bg-zinc-900 p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 shadow-sm">
+        <div className="flex items-center gap-3 bg-white dark:bg-zinc-900 p-1.5 rounded-md border border-zinc-200 dark:border-zinc-800 shadow-sm">
           <div className="px-4 py-2 flex items-center gap-2 text-sm font-bold text-zinc-700 dark:text-zinc-300">
             <Calendar size={16} className="text-indigo-600" />
             {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
@@ -110,12 +110,12 @@ export default function DashboardPage() {
         {statCards.map((card, idx) => (
           <div 
             key={idx} 
-            className={`group p-8 rounded-2xl bg-white dark:bg-zinc-900 border ${card.border} shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden`}
+            className={`group p-8 rounded-md bg-white dark:bg-zinc-900 border ${card.border} shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden`}
           >
             <div className={`absolute top-0 right-0 w-32 h-32 ${card.bg} -mr-16 -mt-16 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity`} />
             
             <div className="flex justify-between items-start relative z-10">
-              <div className={`p-4 rounded-xl ${card.bg} ${card.text}`}>
+              <div className={`p-4 rounded-md ${card.bg} ${card.text}`}>
                 <card.icon size={28} strokeWidth={2.5} />
               </div>
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[11px] font-bold text-zinc-600 dark:text-zinc-400">
@@ -149,7 +149,7 @@ export default function DashboardPage() {
 
       {/* Activity Section Placeholder */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-2xl p-8 text-white relative overflow-hidden shadow-2xl shadow-indigo-600/20">
+        <div className="lg:col-span-2 bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-md p-8 text-white relative overflow-hidden shadow-2xl shadow-indigo-600/20">
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 -mr-20 -mt-20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-400/20 -ml-16 -mb-16 rounded-full blur-2xl" />
           
@@ -168,17 +168,17 @@ export default function DashboardPage() {
             </div>
             
             <div className="flex flex-wrap gap-4 mt-auto">
-              <button className="px-6 py-2.5 bg-white text-indigo-600 rounded-xl font-bold text-sm hover:scale-105 transition-transform shadow-lg">
+              <button className="px-6 py-2.5 bg-white text-indigo-600 rounded-md font-bold text-sm hover:scale-105 transition-transform shadow-lg">
                 Generate Monthly Analysis
               </button>
-              <button className="px-6 py-2.5 bg-white/10 text-white rounded-xl font-bold text-sm hover:bg-white/20 transition-colors backdrop-blur-md">
+              <button className="px-6 py-2.5 bg-white/10 text-white rounded-md font-bold text-sm hover:bg-white/20 transition-colors backdrop-blur-md">
                 Systems Status
               </button>
             </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 shadow-sm flex flex-col gap-6">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-8 shadow-sm flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <h4 className="font-bold text-zinc-900 dark:text-white">Recent Quick Actions</h4>
             <div className="w-8 h-8 rounded-full bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center">
@@ -192,8 +192,8 @@ export default function DashboardPage() {
               { label: "Approve User Edits", icon: UserPlus, color: "indigo" },
               { label: "Review Reports", icon: AlertCircle, color: "amber" }
             ].map((action, i) => (
-              <button key={i} className="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group text-left">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center bg-${action.color}-50 dark:bg-${action.color}-500/10 text-${action.color}-600`}>
+              <button key={i} className="w-full flex items-center gap-4 p-3 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors group text-left">
+                <div className={`w-10 h-10 rounded-md flex items-center justify-center bg-${action.color}-50 dark:bg-${action.color}-500/10 text-${action.color}-600`}>
                   <action.icon size={18} />
                 </div>
                 <div className="flex-1">

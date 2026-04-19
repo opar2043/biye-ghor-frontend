@@ -52,7 +52,7 @@ export function ModeToggle() {
       <DropdownMenuContent
         align="end"
         className="
-          w-36 rounded-2xl p-1.5
+          w-36 rounded-md p-1.5
           bg-white dark:bg-zinc-900
           border border-zinc-200 dark:border-zinc-700
           shadow-xl shadow-black/10 dark:shadow-black/40
@@ -61,7 +61,7 @@ export function ModeToggle() {
         <DropdownMenuItem
           onClick={() => setTheme("light")}
           className="
-            flex items-center gap-2.5 px-3 py-2 rounded-xl
+            flex items-center gap-2.5 px-3 py-2 rounded-md
             text-sm font-medium cursor-pointer
             text-zinc-700 dark:text-zinc-300
             hover:bg-zinc-100 dark:hover:bg-zinc-800
@@ -76,7 +76,7 @@ export function ModeToggle() {
         <DropdownMenuItem
           onClick={() => setTheme("dark")}
           className="
-            flex items-center gap-2.5 px-3 py-2 rounded-xl
+            flex items-center gap-2.5 px-3 py-2 rounded-md
             text-sm font-medium cursor-pointer
             text-zinc-700 dark:text-zinc-300
             hover:bg-zinc-100 dark:hover:bg-zinc-800
@@ -91,7 +91,7 @@ export function ModeToggle() {
         <DropdownMenuItem
           onClick={() => setTheme("system")}
           className="
-            flex items-center gap-2.5 px-3 py-2 rounded-xl
+            flex items-center gap-2.5 px-3 py-2 rounded-md
             text-sm font-medium cursor-pointer
             text-zinc-700 dark:text-zinc-300
             hover:bg-zinc-100 dark:hover:bg-zinc-800

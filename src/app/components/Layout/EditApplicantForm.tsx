@@ -87,14 +87,14 @@ export default function EditApplicantForm({ id }: { id: string }) {
   if (!formData) return null
 
   return (
-    <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl overflow-hidden animate-in fade-in duration-500">
+    <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-md shadow-2xl overflow-hidden animate-in fade-in duration-500">
       <div className="p-6 md:p-10">
         <div className="mb-10 flex items-center justify-between">
            <div>
               <h2 className="text-2xl font-black text-zinc-900 dark:text-white">Edit Profile</h2>
               <p className="text-zinc-500 text-sm">Update the information for {formData.name}</p>
            </div>
-           <div className="text-xs font-bold text-zinc-400 uppercase tracking-widest bg-zinc-50 dark:bg-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
+           <div className="text-xs font-bold text-zinc-400 uppercase tracking-widest bg-zinc-50 dark:bg-zinc-900 px-3 py-1.5 rounded-md border border-zinc-200 dark:border-zinc-800">
              ID: {id.slice(-6)}
            </div>
         </div>
@@ -104,7 +104,7 @@ export default function EditApplicantForm({ id }: { id: string }) {
           {/* Section: Basic Information */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-md flex items-center justify-center text-zinc-900 dark:text-zinc-100">
                 <User size={20} />
               </div>
               <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Basic Information</h3>
@@ -112,19 +112,19 @@ export default function EditApplicantForm({ id }: { id: string }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
               <FormField label="Full Name" icon={<User size={18} />}>
-                <input required type="text" name="name" value={formData.name} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
+                <input required type="text" name="name" value={formData.name} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
 
               <FormField label="Phone Number" icon={<Phone size={18} />}>
-                <input required type="text" name="number" value={formData.number} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
+                <input required type="text" name="number" value={formData.number} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
 
               <FormField label="Age" icon={<Calendar size={18} />}>
-                <input required type="number" name="age" value={formData.age} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
+                <input required type="number" name="age" value={formData.age} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
 
               <FormField label="Gender" icon={<Users size={18} />}>
-                <select required name="gender" value={formData.gender} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all">
+                <select required name="gender" value={formData.gender} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all">
                   <option value="">Select Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -132,7 +132,7 @@ export default function EditApplicantForm({ id }: { id: string }) {
               </FormField>
 
               <FormField label="Education" icon={<GraduationCap size={18} />}>
-                <input required type="text" name="education" value={formData.education} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
+                <input required type="text" name="education" value={formData.education} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function EditApplicantForm({ id }: { id: string }) {
           {/* Section: Physical Appearance */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
-              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-900 dark:text-zinc-100">
+              <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-md flex items-center justify-center text-zinc-900 dark:text-zinc-100">
                 <Camera size={20} />
               </div>
               <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Appearance Details</h3>
@@ -148,15 +148,15 @@ export default function EditApplicantForm({ id }: { id: string }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
               <FormField label="Skin Color" icon={<CloudHail size={18} />}>
-                <input required type="text" name="color" value={formData.color} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
+                <input required type="text" name="color" value={formData.color} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
 
               <FormField label="Hair Color" icon={<CloudHail size={18} />}>
-                <input required type="text" name="hairColor" value={formData.hairColor} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
+                <input required type="text" name="hairColor" value={formData.hairColor} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
 
               <FormField label="Eye Color" icon={<Eye size={18} />}>
-                <input required type="text" name="eyeColor" value={formData.eyeColor} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
+                <input required type="text" name="eyeColor" value={formData.eyeColor} onChange={handleChange} className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md pl-12 pr-4 py-3 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all" />
               </FormField>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function EditApplicantForm({ id }: { id: string }) {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="w-full h-14 bg-indigo-600 text-white rounded-xl font-bold shadow-xl shadow-indigo-600/10 hover:bg-indigo-700 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full h-14 bg-indigo-600 text-white rounded-md font-bold shadow-xl shadow-indigo-600/10 hover:bg-indigo-700 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isSubmitting ? (
               <Loader2 className="w-6 h-6 animate-spin" />

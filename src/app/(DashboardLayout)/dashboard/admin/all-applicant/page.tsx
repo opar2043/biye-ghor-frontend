@@ -20,7 +20,9 @@ import { personRoutes } from "@/src/Service/person.route"
 import personType from "@/src/Service/type"
 import { toast } from "sonner"
 import Link from "next/link"
-import { Router } from "next/router"
+import { useRouter } from "next/navigation"
+
+import Loading from "@/src/app/components/ui/Loading"
 
 export default function AllApplicantPage() {
   const [mockApplicants, setMockApplicants] = useState<personType[]>([]);
@@ -42,19 +44,20 @@ export default function AllApplicantPage() {
     fetchApplicants();
   }, []);
 
-  const handleApprove = async (id: string) => {
+  const handleToggleStatus = async (id: string, currentStatus: boolean) => {
     try {
-      const toastId = toast.loading("Approving applicant...");
-      await personRoutes.approvePerson(id, { isSeen: true });
+      const newStatus = !currentStatus;
+      const toastId = toast.loading(`${newStatus ? 'Approving' : 'Unapproving'} applicant...`);
+      await personRoutes.approvePerson(id, { isSeen: newStatus, isApprove: newStatus });
       
       // Update local state
       setMockApplicants(prev => prev.map(app => 
-        app._id === id ? { ...app, isSeen: true } : app
+        app._id == id ? { ...app, isSeen: newStatus, isApprove: newStatus } : app
       ));
       
-      toast.success("Applicant approved successfully", { id: toastId });
+      toast.success(`Applicant ${newStatus ? 'approved' : 'unapproved'} successfully`, { id: toastId });
     } catch (error) {
-      toast.error("Failed to approve applicant");
+      toast.error("Operation failed");
     }
   }
 
@@ -75,11 +78,7 @@ export default function AllApplicantPage() {
   }
 
   if (loading) {
-    return (
-      <div className="p-10 flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -143,7 +142,7 @@ export default function AllApplicantPage() {
                   <td className="px-6 py-4 text-sm text-zinc-500">{app.division}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                       {app.isSeen === true ? (
+                       {app.isSeen == true ? (
                          <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 bg-green-500/15 p-1.5 rounded-sm">
                            <CheckCircle size={12} />
                            <span className="text-[12px] font-semibold tracking-tight ">Approved</span>
@@ -158,15 +157,17 @@ export default function AllApplicantPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2 transition-opacity">
-                      {app.isSeen && (
                         <button 
-                          onClick={() => handleApprove(app._id)}
-                          className="p-2 text-zinc-600 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md transition-all tooltip"
-                          title="Approve"
+                          onClick={() => handleToggleStatus(app._id, app.isSeen)}
+                          className={`p-2 rounded-md transition-all tooltip ${
+                            app.isSeen 
+                              ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20" 
+                              : "text-zinc-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                          }`}
+                          title={app.isSeen ? "Unapprove" : "Approve"}
                         >
                           <CheckCircle size={16} />
                         </button>
-                      )}
                       <Link 
                         href={`/dashboard/admin/all-applicant/${app._id}`}
                         className="p-2 text-zinc-600 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-md transition-all"

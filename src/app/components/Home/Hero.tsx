@@ -49,7 +49,7 @@ export function Hero() {
       </div>
 
       {/* Stats Floatie */}
-      <div className="hidden lg:block absolute right-12 bottom-24 p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-xl animate-bounce duration-[3000ms]">
+      <div className="hidden lg:block absolute right-12 bottom-24 p-4 rounded-md bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-xl animate-bounce duration-[3000ms]">
          <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
                <Heart className="w-5 h-5 text-indigo-600 fill-indigo-600" />

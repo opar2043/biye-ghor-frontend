@@ -181,7 +181,7 @@ export default function AllAppliciantUserComplainPage() {
       {/* Modal Overlay */}
       {selectedComplain && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white dark:bg-zinc-900 w-full max-w-lg rounded-2xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="bg-white dark:bg-zinc-900 w-full max-w-lg rounded-md shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden animate-in zoom-in-95 duration-200">
              {/* Modal Header */}
              <div className="bg-zinc-50 dark:bg-zinc-800/50 px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-rose-600">
@@ -221,7 +221,7 @@ export default function AllAppliciantUserComplainPage() {
                    </div>
                 </div>
 
-                <div className="space-y-2 p-4 bg-zinc-50 dark:bg-zinc-800/80 rounded-xl border border-zinc-100 dark:border-zinc-800">
+                <div className="space-y-2 p-4 bg-zinc-50 dark:bg-zinc-800/80 rounded-md border border-zinc-100 dark:border-zinc-800">
                    <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 flex items-center gap-1.5">
                       <MessageSquare size={12} /> Detailed Message
                    </p>
@@ -246,7 +246,7 @@ export default function AllAppliciantUserComplainPage() {
                 </button>
                 <button 
                    onClick={() => handleDelete(selectedComplain._id)}
-                   className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition-all shadow-md shadow-rose-600/20 active:scale-95 flex items-center gap-2"
+                   className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-md transition-all shadow-md shadow-rose-600/20 active:scale-95 flex items-center gap-2"
                 >
                    <Trash2 size={14} /> Delete Case
                 </button>
