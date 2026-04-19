@@ -9,7 +9,7 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      <Navbar user={null} />
+      <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
     </>

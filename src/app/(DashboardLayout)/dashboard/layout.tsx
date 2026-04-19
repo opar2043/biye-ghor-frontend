@@ -11,10 +11,11 @@ import {
   ChevronRight
 } from 'lucide-react'
 import DashboardNavigation from '../../components/Layout/DashboardNavigation'
+import { useAuth } from '../../components/lib/useAuth'
 
 export default function DashboardLayout({children}: {children: React.ReactNode}) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-
+  const {user} = useAuth()
   return (
     <div className="flex min-h-screen bg-zinc-50 dark:bg-zinc-950">
       
@@ -57,8 +58,8 @@ export default function DashboardLayout({children}: {children: React.ReactNode})
                 <UserIcon size={20} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-zinc-900 dark:text-white truncate">Admin User</p>
-                <p className="text-[10px] text-zinc-500 truncate">admin@biyeghor.com</p>
+                <p className="text-sm font-bold text-zinc-900 dark:text-white truncate">{user?.email?.slice(0, 10)}</p>
+                <p className="text-[10px] text-zinc-500 truncate">{user?.email}</p>
               </div>
               <button className="p-1.5 text-zinc-400 hover:text-rose-500 transition-colors">
                  <LogOut size={16} />

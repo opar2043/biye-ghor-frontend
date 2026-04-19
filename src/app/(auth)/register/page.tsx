@@ -35,14 +35,14 @@ export default function RegisterPage() {
         await userApi.addUser({
           name: `${firstName} ${lastName}`,
           email: email,
-          role: "user",
+          role: "admin",
           uid: result.user.uid,
           createdAt: new Date().toISOString()
         })
       }
 
       toast.success("Account created successfully!")
-      router.push("/dashboard/user")
+      router.push("/dashboard")
     } catch (error: any) {
       console.error(error)
       toast.error(error.message || "Failed to create account")

@@ -1,25 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import InstagramProfile from "@/src/app/components/Profile/InstagramProfile";
+import personType from "@/src/Service/type";
 
-type Person = {
-  _id: string;
-  name: string;
-  number: string;
-  adress: string;
-  age: number;
-  gender: string;
-  color: string;
-  hairColor: string;
-  eyeColor: string;
-  education: string;
-  appoionmentAdress: string;
-  isSeen: boolean;
-  images?: string[];
-};
 
 // ── Mock data with image placeholders ──────
-const persons: Person[] = [
+const persons = [
   {
     _id: "1",
     name: "Ayesha Rahman",
@@ -206,6 +192,6 @@ export default async function ViewCard({
     );
   }
 
-  return <InstagramProfile p={p} />;
+  return <InstagramProfile p={p as personType} />;
 }
 

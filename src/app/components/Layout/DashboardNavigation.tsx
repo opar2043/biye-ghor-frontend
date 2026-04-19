@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiFillShopping as OrderIcon } from "react-icons/ai";
 import { MdPerson2 as ProfileIcon } from "react-icons/md";
 import { MdOutlineRateReview as ReviewIcon } from "react-icons/md";
@@ -8,21 +8,37 @@ import { IoMdHome as HomeIcon } from "react-icons/io";
 import { GiShoppingBag as AllOrdersIcon } from "react-icons/gi";
 import { RiMedicineBottleFill as MedicineIcon } from "react-icons/ri";
 import { MdInventory as StockIcon } from "react-icons/md";
-import { LogOut as LogoutIcon } from "lucide-react";
+import { LogOut as LogoutIcon  } from "lucide-react";
 import { ElementType } from "react";
 import { useAuth } from "../lib/useAuth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { userApi } from "@/src/Service/users.route";
 
 type Role = "admin" | "user" | "moderator";
+
 
 const DashboardNavigation = () => {
   const { user, handleLogout } = useAuth();
   const router = useRouter();
-  
-  // For now we assume admin role or fetch it from DB. 
-  // Let's use a simple check or default to admin if UID is found for testing.
-  const role = user?.email === "admin@test.com" ? "admin" : "user"; 
+  const [role, setRole] = useState<Role | "">("");
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      if (user?.email) {
+        try {
+          const currentUser = await userApi.getAllUsers();
+          const foundUser = currentUser.find((u: any) => u.email === user.email);
+          setRole(foundUser?.role || "user");
+        } catch (error) {
+          console.error("Error fetching role:", error);
+          setRole("user");
+        }
+      }
+    };
+    fetchUserRole();
+  }, [user]);
+
 
   const onSignOut = async () => {
     try {
@@ -69,7 +85,7 @@ const AdminNavigation = () => (
     <Navigator route="/dashboard/admin/all-applicant" Icon={StockIcon} label="All Applicants" />
     <Navigator route="/dashboard/admin/users" Icon={AllOrdersIcon} label="All Users" />
     <Navigator route="/dashboard/admin/profile" Icon={ProfileIcon} label="Profile" />
-    <Navigator route="/dashboard/admin/all-complain" Icon={ProfileIcon} label="All Complaints" />
+    <Navigator route="/dashboard/admin/all-complain" Icon={ReviewIcon} label="All Complaints" />
     <Navigator route="/" Icon={HomeIcon} label="Home" className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20" />
   </>
 );
@@ -96,4 +112,4 @@ const Navigator = ({
   );
 };
 
-export default DashboardNavigation;
+export default DashboardNavigation;

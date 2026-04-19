@@ -3,21 +3,6 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import personType from '@/src/Service/type'
 
-// type Person = {
-//   _id: string
-//   name: string
-//   number: string
-//   adress: string
-//   age: number
-//   gender: string
-//   color: string
-//   hairColor: string
-//   eyeColor: string
-//   education: string
-//   appoionmentAdress: string
-//   isSeen: boolean
-//   images?: string[]
-// }
 
 export default function InstagramProfile({ p }: { p: personType }) {
   const [activeTab, setActiveTab] = useState('images')

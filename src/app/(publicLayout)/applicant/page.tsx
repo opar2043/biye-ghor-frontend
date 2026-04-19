@@ -4,7 +4,6 @@ import { useState, useMemo } from "react"
 import { Users, MapPin, RotateCcw, Map } from "lucide-react"
 import Card from "../../components/Layout/Card"
 import { BANGLADESH_LOCATIONS, DIVISIONS, Division } from "../../constants/locationData"
-import { FaFemale, FaMale } from "react-icons/fa"
 
 const initialPersons = [
   { _id: "1", name: "Ayesha Rahman", number: "01712345678", adress: "Dhaka, Bangladesh", age: 24, gender: "Female", color: "Fair", hairColor: "Black", eyeColor: "Brown", education: "BSc in CSE", appoionmentAdress: "Dhanmondi, Dhaka", isSeen: false, division: "Dhaka", district: "Dhaka" },
@@ -70,8 +69,8 @@ export default function ApplicantPage() {
                   className="w-full bg-background border border-border rounded-md pl-12 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none transition-all cursor-pointer hover:border-muted-foreground/30 appearance-none"
                 >
                   <option value=""> All Genders</option>
-                  <option value="Male"><FaMale size={18} />Male</option>
-                  <option value="Female"><FaFemale size={18} /> Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
                   <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">

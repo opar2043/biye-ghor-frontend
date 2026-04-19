@@ -15,7 +15,7 @@ const getUserById = async (id: string) => {
  return response.data
 }
 
-    const updateUser = async (id: string, data: any) => {
+const updateUser = async (id: string, data: any) => {
  const response = await api.put(`/users/${id}`, data)
  return response.data
 }
