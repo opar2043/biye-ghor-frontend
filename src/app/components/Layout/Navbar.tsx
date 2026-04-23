@@ -180,7 +180,7 @@ export function Navbar() {
           className="shrink-0 flex items-center gap-2.5 hover:opacity-80 transition-opacity"
         >
           <div className="w-8 h-8 rounded-md bg-zinc-900 dark:bg-white flex items-center justify-center text-white dark:text-zinc-900 text-xs font-black">
-            BG
+            OL
           </div>
           <span className="font-bold text-[15px] tracking-tight text-zinc-900 dark:text-white hidden sm:block">
             Ollo

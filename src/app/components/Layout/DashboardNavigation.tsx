@@ -8,7 +8,7 @@ import { IoMdHome as HomeIcon } from "react-icons/io";
 import { GiShoppingBag as AllOrdersIcon } from "react-icons/gi";
 import { RiMedicineBottleFill as MedicineIcon } from "react-icons/ri";
 import { MdInventory as StockIcon } from "react-icons/md";
-import { LogOut as LogoutIcon  } from "lucide-react";
+import { LogOut as LogoutIcon ,LayoutDashboard } from "lucide-react";
 import { ElementType } from "react";
 import { useAuth } from "../lib/useAuth";
 import { toast } from "sonner";
@@ -81,6 +81,7 @@ const UserNavigation = () => (
 
 const AdminNavigation = () => (
   <>
+    <Navigator route="/dashboard/" Icon={LayoutDashboard} label="Dashboard" />
     <Navigator route="/dashboard/admin/add-applicant" Icon={MedicineIcon} label="Add Applicant" />
     <Navigator route="/dashboard/admin/all-applicant" Icon={StockIcon} label="All Applicants" />
     <Navigator route="/dashboard/admin/users" Icon={AllOrdersIcon} label="All Users" />
