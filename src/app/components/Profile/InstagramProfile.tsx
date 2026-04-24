@@ -2,43 +2,28 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import personType from '@/src/Service/type'
-
-
+import { ImageIcon, Film, Phone, Info, ChevronLeft, MapPin, List, Heart, MessageCircle } from 'lucide-react'
 export default function InstagramProfile({ p }: { p: personType }) {
   const [activeTab, setActiveTab] = useState('images')
   
-const images = Array.isArray(p.image)
-  ? p.image
-  : p.image
-    ? [p.image]
-    : [
-        `https://api.dicebear.com/7.x/avataaars/svg?seed=${p.name}`,
-        `https://api.dicebear.com/7.x/pixel-art/svg?seed=${p.name}`,
-        `https://api.dicebear.com/7.x/bottts/svg?seed=${p.name}`,
-        `https://api.dicebear.com/7.x/adventurer/svg?seed=${p.name}`
-      ];
+  const defaultImage = `https://ui-avatars.com/api/?name=${encodeURIComponent(p.name || 'User')}&background=random&size=400`;
+  
+  let imagesList: string[] = [];
+  const pData = p as any;
+  if (pData.images && pData.images.length > 0) {
+    imagesList = pData.images;
+  } else if (p.image) {
+    imagesList = Array.isArray(p.image) ? p.image : [p.image];
+  } else {
+    imagesList = [defaultImage];
+  }
 
   const tabs = [
-    { id: 'images', label: 'Images', icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-      </svg>
-    )},
-    { id: 'Video', label: 'Video', icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-    )},
-    { id: 'contact', label: 'Contact', icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    )},
-    { id: 'About', label: 'About', icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    )}
+    { id: 'images', label: 'Photos', icon: <ImageIcon className="w-5 h-5" /> },
+    { id: 'video', label: 'Video', icon: <Film className="w-5 h-5" /> },
+    { id: 'details', label: 'Details', icon: <List className="w-5 h-5" /> },
+    { id: 'contact', label: 'Contact', icon: <Phone className="w-5 h-5" /> },
+    { id: 'info', label: 'About', icon: <Info className="w-5 h-5" /> }
   ]
 
   return (
@@ -46,9 +31,7 @@ const images = Array.isArray(p.image)
       {/* Mobile Instagram Header */}
       <div className="sticky top-0 z-10 bg-white border-b border-gray-100 flex items-center justify-between px-4 py-3">
         <Link href="/applicant" className="text-gray-900 overflow-hidden">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+          <ChevronLeft className="w-6 h-6" />
         </Link>
         <span className="font-bold text-gray-900 truncate max-w-[200px]">{p.name}</span>
         <div className="w-6" /> {/* Spacer */}
@@ -61,9 +44,12 @@ const images = Array.isArray(p.image)
             <div className="w-20 h-20 md:w-36 md:h-36 rounded-full overflow-hidden p-1 bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600">
                <div className="w-full h-full rounded-full border-4 border-white overflow-hidden bg-gray-100">
                   <img 
-                    src={images[0]} 
+                    src={imagesList[0]} 
                     alt={p.name}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = defaultImage;
+                    }}
                   />
                </div>
             </div>
@@ -74,9 +60,11 @@ const images = Array.isArray(p.image)
 
 
             <div className="hidden md:block">
-               <p className="font-bold text-gray-900">{p.name}</p>
-               <p className="text-gray-600 text-sm">{p.education}</p>
-               <p className="text-gray-500 text-sm">{p.adress}</p>
+               <p className="font-bold text-gray-900 text-xl">{p.name}</p>
+               <p className="text-gray-600 text-sm mt-1">{p.education}</p>
+               <p className="text-gray-500 text-sm flex items-center gap-1 mt-1">
+                 <MapPin className="w-4 h-4" /> {p.district ? `${p.district}, ${p.division}` : p.adress}
+               </p>
             </div>
           </div>
         </div>
@@ -93,7 +81,7 @@ const images = Array.isArray(p.image)
 
         {/* Mobile Stats */}
         <div className="flex md:hidden justify-around py-3 border-t border-gray-100 text-center text-sm">
-           <div><p className="font-semibold">{images.length}</p><p className="text-gray-500">posts</p></div>
+           <div><p className="font-semibold">{imagesList.length}</p><p className="text-gray-500">photos</p></div>
         </div>
       </div>
 
@@ -120,16 +108,19 @@ const images = Array.isArray(p.image)
         <div className="mt-0.5">
           {activeTab === 'images' && (
             <div className="grid grid-cols-3 gap-0.5 md:gap-4 px-0.5 md:px-0">
-              {images.map((img, idx) => (
+              {imagesList.map((img, idx) => (
                 <div key={idx} className="aspect-square bg-gray-100 relative group overflow-hidden">
                   <img 
                     src={img} 
-                    alt={`Selfie ${idx}`} 
+                    alt={`Photo ${idx}`} 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = defaultImage;
+                    }}
                   />
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 text-white font-bold">
-                    <span className="flex items-center gap-1"><svg className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" /></svg> 84</span>
-                    <span className="flex items-center gap-1"><svg className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" /></svg> 12</span>
+                    <span className="flex items-center gap-1"><Heart className="w-5 h-5 fill-current" /> {Math.floor(Math.random() * 100) + 10}</span>
+                    <span className="flex items-center gap-1"><MessageCircle className="w-5 h-5 fill-current" /> {Math.floor(Math.random() * 20) + 1}</span>
                   </div>
                 </div>
               ))}
@@ -141,13 +132,33 @@ const images = Array.isArray(p.image)
               <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest border-b pb-2">Personal Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
                 <DetailItem label="Age" value={`${p.age} years`} />
-                <DetailItem label="Gender" value={p.gender ?? "N/A"} />
-                <DetailItem label="Education" value={p.education ?? "N/A"} />
-                <DetailItem label="Skin Tone" value={p.color ?? "N/A"} />
-                <DetailItem label="Hair Color" value={p.hairColor ?? "N/A"} />
-                <DetailItem label="Eye Color" value={p.eyeColor ?? "N/A"} />
+                <DetailItem label="Gender" value={p.gender || "N/A"} />
+                <DetailItem label="Education" value={p.education || "N/A"} />
+                <DetailItem label="Skin Tone" value={p.color || "N/A"} />
+                <DetailItem label="Hair Color" value={p.hairColor || "N/A"} />
+                <DetailItem label="Eye Color" value={p.eyeColor || "N/A"} />
+                <DetailItem label="Division" value={p.division || "N/A"} />
+                <DetailItem label="District" value={p.district || "N/A"} />
               </div>
             </div>  
+          )}
+
+          {activeTab === 'video' && (
+            <div className="p-4 md:p-10 space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest border-b pb-2">Profile Video</h2>
+              {p.videoLink ? (
+                <div className="aspect-video w-full max-w-2xl mx-auto rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                  <a href={p.videoLink} target="_blank" rel="noreferrer" className="text-blue-600 font-medium hover:underline flex items-center gap-2">
+                    <Film className="w-5 h-5" /> View Video Presentation
+                  </a>
+                </div>
+              ) : (
+                <div className="py-12 text-center bg-gray-50 rounded-lg border border-dashed border-gray-200">
+                  <Film className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-500 font-medium">No video uploaded yet</p>
+                </div>
+              )}
+            </div>
           )}
 
           {activeTab === 'contact' && (
@@ -156,20 +167,31 @@ const images = Array.isArray(p.image)
                <div className="space-y-4">
                   <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-md">
                     <div className="p-2 bg-green-100 text-green-600 rounded-full">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                      <Phone className="w-5 h-5" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-400">Phone</p>
-                      <p className="font-medium text-gray-900">{p.number}</p>
+                      <p className="font-medium text-gray-900">{p.number || "N/A"}</p>
                     </div>
                   </div>
+                  {p.email && (
+                    <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-md">
+                      <div className="p-2 bg-purple-100 text-purple-600 rounded-full">
+                        <MessageCircle className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-400">Email</p>
+                        <p className="font-medium text-gray-900">{p.email}</p>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-md">
                     <div className="p-2 bg-blue-100 text-blue-600 rounded-full">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                      <MapPin className="w-5 h-5" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-400">Address</p>
-                      <p className="font-medium text-gray-900">{p.adress}</p>
+                      <p className="font-medium text-gray-900">{p.adress || "N/A"}</p>
                     </div>
                   </div>
                   <a 
@@ -187,14 +209,14 @@ const images = Array.isArray(p.image)
                <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest border-b pb-2">Biography & Info</h2>
                <div className="prose prose-sm text-gray-600">
                   <p>
-                    {p.name} is a {p.age}-year-old {p.gender.toLowerCase()} professional with a background in {p.education}. 
-                    Currently residing in {p.adress}, they are looking for a meaningful connection and a life partner who values tradition combined with modern perspectives.
+                    {p.name} is a {p.age}-year-old {p.gender?.toLowerCase() || "person"} with a background in {p.education || "education"}. 
+                    Currently residing in {p.district ? `${p.district}, ${p.division}` : p.adress}, they are looking for a meaningful connection and a life partner who values tradition combined with modern perspectives.
                   </p>
                   <p>
-                    <strong>Appearance:</strong> {p.color} skin tone with {p.hairColor?.toLowerCase() || "N/A"} hair and {p.eyeColor?.toLowerCase() || "N/A"} eyes.
+                    <strong>Appearance:</strong> {p.color || "N/A"} skin tone with {p.hairColor?.toLowerCase() || "N/A"} hair and {p.eyeColor?.toLowerCase() || "N/A"} eyes.
                   </p>
                   <p>
-                    <strong>Availability:</strong> Contact at {p.appoionmentAdress} for formal meetings and appointments.
+                    <strong>Availability:</strong> Contact at {p.appoionmentAdress || p.adress || "their provided address"} for formal meetings and appointments.
                   </p>
                </div>
             </div>

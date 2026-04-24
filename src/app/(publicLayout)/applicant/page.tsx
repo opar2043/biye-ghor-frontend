@@ -1,29 +1,33 @@
+'use client'
 
-
-import { useState, useMemo } from "react"
-import { Users, MapPin, RotateCcw, Map } from "lucide-react"
+import { useState, useMemo, useEffect } from "react"
+import { Users, MapPin, RotateCcw, Map, ChevronDown, Search, Loader2 } from "lucide-react"
 import Card from "../../components/Layout/Card"
 import { BANGLADESH_LOCATIONS, DIVISIONS, Division } from "../../constants/locationData"
 import { personRoutes } from "@/src/Service/person.route"
+import personType from "@/src/Service/type"
 
-// const initialPersons = [
-//   { _id: "1", name: "Ayesha Rahman", number: "01712345678", adress: "Dhaka, Bangladesh", age: 24, gender: "Female", color: "Fair", hairColor: "Black", eyeColor: "Brown", education: "BSc in CSE", appoionmentAdress: "Dhanmondi, Dhaka", isSeen: false, division: "Dhaka", district: "Dhaka" },
-//   { _id: "2", name: "Rahim Ahmed", number: "01887654321", adress: "Chattogram, Bangladesh", age: 28, gender: "Male", color: "Wheatish", hairColor: "Black", eyeColor: "Black", education: "MBA", appoionmentAdress: "Agrabad, Chattogram", isSeen: true, division: "Chattogram", district: "Chattogram" },
-//   { _id: "3", name: "Nusrat Jahan", number: "01911223344", adress: "Sylhet, Bangladesh", age: 23, gender: "Female", color: "Fair", hairColor: "Brown", eyeColor: "Brown", education: "BA in English", appoionmentAdress: "Zindabazar, Sylhet", isSeen: false, division: "Sylhet", district: "Sylhet" },
-//   { _id: "4", name: "Tanvir Hasan", number: "01655667788", adress: "Rajshahi, Bangladesh", age: 30, gender: "Male", color: "Medium", hairColor: "Black", eyeColor: "Black", education: "BBA", appoionmentAdress: "Shaheb Bazar, Rajshahi", isSeen: true, division: "Rajshahi", district: "Rajshahi" },
-//   { _id: "5", name: "Mim Akter", number: "01799887766", adress: "Khulna, Bangladesh", age: 25, gender: "Female", color: "Fair", hairColor: "Black", eyeColor: "Hazel", education: "BSc in Pharmacy", appoionmentAdress: "Sonadanga, Khulna", isSeen: false, division: "Khulna", district: "Khulna" },
-//   { _id: "6", name: "Sabbir Hossain", number: "01544332211", adress: "Barishal, Bangladesh", age: 27, gender: "Male", color: "Wheatish", hairColor: "Black", eyeColor: "Brown", education: "Diploma in Engineering", appoionmentAdress: "Sadar Road, Barishal", isSeen: true, division: "Barishal", district: "Barishal" },
-//   { _id: "7", name: "Farzana Islam", number: "01366778899", adress: "Comilla, Bangladesh", age: 22, gender: "Female", color: "Fair", hairColor: "Dark Brown", eyeColor: "Brown", education: "HSC", appoionmentAdress: "Kandirpar, Comilla", isSeen: false, division: "Chattogram", district: "Comilla" },
-//   { _id: "8", name: "Mahmudul Hasan", number: "01422334455", adress: "Rangpur, Bangladesh", age: 29, gender: "Male", color: "Medium", hairColor: "Black", eyeColor: "Black", education: "BSc in Civil Engineering", appoionmentAdress: "Modern Mor, Rangpur", isSeen: true, division: "Rangpur", district: "Rangpur" },
-//   { _id: "9", name: "Shila Chowdhury", number: "01833445566", adress: "Mymensingh, Bangladesh", age: 24, gender: "Female", color: "Wheatish", hairColor: "Black", eyeColor: "Brown", education: "BSc in Biology", appoionmentAdress: "Ganginarpar, Mymensingh", isSeen: false, division: "Mymensingh", district: "Mymensingh" },
-//   { _id: "10", name: "Imran Khan", number: "01755664433", adress: "Dhaka, Bangladesh", age: 31, gender: "Male", color: "Medium", hairColor: "Black", eyeColor: "Black", education: "MSc in IT", appoionmentAdress: "Uttara, Dhaka", isSeen: true, division: "Dhaka", district: "Dhaka" },
-// ]
+export default function ApplicantPage() {
+  const [initialPersons, setInitialPersons] = useState<personType[]>([])
+  const [loading, setLoading] = useState(true)
 
-export default async function ApplicantPage() {
-   const initialPersons = await personRoutes.getPersons() // Fetch initial data from API
   const [gender, setGender] = useState<string>("")
   const [division, setDivision] = useState<Division | "">("")
   const [district, setDistrict] = useState<string>("")
+
+  useEffect(() => {
+    const fetchPersons = async () => {
+      try {
+        const data = await personRoutes.getPersons()
+        setInitialPersons(data)
+      } catch (error) {
+        console.error("Failed to fetch persons", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchPersons()
+  }, [])
 
   const filteredPersons = useMemo(() => {
     return initialPersons.filter(person => {
@@ -32,7 +36,7 @@ export default async function ApplicantPage() {
       const matchDistrict = district ? person.district === district : true
       return matchGender && matchDivision && matchDistrict
     })
-  }, [gender, division, district])
+  }, [gender, division, district, initialPersons])
 
   const handleDivisionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDivision(e.target.value as Division | "")
@@ -75,9 +79,7 @@ export default async function ApplicantPage() {
                   <option value="Female">Female</option>
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
-                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <ChevronDown size={14} strokeWidth={2} />
                 </div>
               </div>
             </div>
@@ -102,9 +104,7 @@ export default async function ApplicantPage() {
                   ))}
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
-                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <ChevronDown size={14} strokeWidth={2} />
                 </div>
               </div>
             </div>
@@ -130,9 +130,7 @@ export default async function ApplicantPage() {
                   ))}
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
-                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <ChevronDown size={14} strokeWidth={2} />
                 </div>
               </div>
             </div>
@@ -149,7 +147,12 @@ export default async function ApplicantPage() {
         </div>
 
         {/* Grid */}
-        {filteredPersons.length > 0 ? (
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
+            <p className="text-muted-foreground">Loading profiles...</p>
+          </div>
+        ) : filteredPersons.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredPersons.map(p => (
               <Card key={p._id} p={p} />
@@ -158,7 +161,7 @@ export default async function ApplicantPage() {
         ) : (
           <div className="flex flex-col items-center justify-center py-20 bg-card/50 rounded-3xl border border-dashed border-border">
             <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <Search className="w-6 h-6 text-muted-foreground" strokeWidth={2} />
             </div>
             <h3 className="text-lg font-medium">No matches found</h3>
             <p className="text-muted-foreground mt-1">Try adjusting your filters to find more profiles.</p>

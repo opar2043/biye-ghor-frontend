@@ -35,7 +35,7 @@ export default function RegisterPage() {
         await userApi.addUser({
           name: `${firstName} ${lastName}`,
           email: email,
-          role: "admin",
+          role: "user",
           uid: result.user.uid,
           createdAt: new Date().toISOString()
         })

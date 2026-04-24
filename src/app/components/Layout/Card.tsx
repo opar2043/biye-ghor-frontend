@@ -2,6 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { MapPin } from 'lucide-react'
 
 type Person = {
   _id: string
@@ -10,38 +11,36 @@ type Person = {
   adress: string
   age: number
   gender: string
-  color: string
-  hairColor: string
-  eyeColor: string
-  education: string
-  appoionmentAdress: string
-  isSeen: boolean
+  color?: string
+  hairColor?: string
+  eyeColor?: string
+  education?: string
+  appoionmentAdress?: string
+  isSeen?: boolean
+  district?: string
+  division?: string
   images?: string[]
   image?: string
 }
 
 export default function Card({ p }: { p: Person }) {
-  const profileImage = p.image || p.images?.[0] || `https://api.dicebear.com/7.x/avataaars/svg?seed=${p.name}`
+  const profileImage = p.image || p.images?.[0] || `https://ui-avatars.com/api/?name=${encodeURIComponent(p.name || 'User')}&background=random&size=400`
   
   // Extract district from address (assuming "District, Country" or similar)
-  const addressParts = p.adress.split(',')
-  const district = addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : p.adress.trim()
+  const addressParts = p.adress?.split(',') || []
+  const district = p.district || (addressParts.length > 1 ? addressParts[addressParts.length - 2].trim() : p.adress?.trim() || 'Unknown')
 
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-md border border-gray-100 dark:border-zinc-800 overflow-hidden hover:shadow-xl dark:hover:shadow-indigo-500/5 transition-all duration-300 group max-w-sm mx-auto w-full">
       {/* Full Width Image (Facebook Profile Style) */}
       <div className="h-[200px] relative overflow-hidden bg-gray-50 dark:bg-zinc-800">
-        {/* <Image
-          src={profileImage} 
-          alt={p.name}
-          width={500}
-          height={500}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-        /> */}
         <img
           src={profileImage}
           alt={p.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(p.name || 'User')}&background=random&size=400`
+          }}
         />
         
         {/* Status Indicator */}
@@ -62,18 +61,7 @@ export default function Card({ p }: { p: Person }) {
             {p.name}
           </h3>
           <div className="flex items-center justify-center gap-1.5 mt-1">
-            <svg 
-              className="w-3.5 h-3.5 text-gray-400 dark:text-zinc-500" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
+            <MapPin className="w-3.5 h-3.5 text-gray-400 dark:text-zinc-500" />
             <p className="text-[13px] font-medium text-gray-500 dark:text-zinc-400 uppercase tracking-wide">
               {district}
             </p>
