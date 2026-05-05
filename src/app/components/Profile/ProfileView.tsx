@@ -62,11 +62,9 @@ export function ProfileView() {
         {/* Footer Actions */}
         <div className="mt-12 flex gap-3">
           <button className="flex-1 px-6 py-3 bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 rounded-md font-bold hover:opacity-90 transition-all text-sm">
-            Edit Information
+            Profile Card
           </button>
-          <button className="px-3.5 py-3 border border-zinc-200 dark:border-zinc-800 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all">
-            <Settings size={20} className="text-zinc-500" />
-          </button>
+
         </div>
       </div>
     </div>
